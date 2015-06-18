@@ -19,9 +19,9 @@ function hddcheck(){		# if the mounted hdd space is over 98% the script exits
 	}
 
 function record(){
-	
+				# thanks for parapoke :-)	
 	mkdir -p $FOLDER/`date +%Y-%m-%d__$VIVOTEK_IP`
-	vlc rtsp://$VIVOTEK_IP:554/$STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIVOTEK_IP`/`date +%Y-%m-%d__%H_%M`.mp4 # thanks for parapoke :-)
+	vlc rtsp://$VIVOTEK_IP:554/$STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIVOTEK_IP`/`date +%Y-%m-%d__%H_%M`.mp4
 	
 	}
 
@@ -33,5 +33,4 @@ while [ 1 ]; do
 done
 
 # TODO
-
 # make a 2nd hddcheck function which deletes the oldest folder
