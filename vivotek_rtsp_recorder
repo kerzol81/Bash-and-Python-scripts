@@ -1,0 +1,37 @@
+#!/bin/bash
+
+VIVOTEK_IP="192.168.1.10"
+USERNAME="root"
+PASSWD="root"
+
+SPLIT="300" 				# 300 = 5 min
+
+STREAM="live2.sdp"			# 1st stream on Vivotek: rtsp://user:passwd@192.168.1.100:554/live.sdp
+FOLDER="/mnt/hdd/vivotek"
+
+
+		
+function hddcheck(){		# if the mounted hdd space is over 98% the script exits
+	SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+		if [ "$SPACE" -ge 98 ];then
+			exit 1
+		fi
+	}
+
+function record(){
+	
+	mkdir -p $FOLDER/`date +%Y-%m-%d__$VIVOTEK_IP`
+	vlc rtsp://$VIVOTEK_IP:554/$STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIVOTEK_IP`/`date +%Y-%m-%d__%H_%M`.mp4 # thanks for parapoke :-)
+	
+	}
+
+sleep 20					# must wait until rpi syncs from ntp server
+
+while [ 1 ]; do
+		hddcheck
+		record
+done
+
+# TODO
+
+# make a 2nd hddcheck function which deletes the oldest folder
