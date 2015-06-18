@@ -1,0 +1,34 @@
+#!/bin/bash
+# syncing from AXIS video server
+
+# to make it run in every minute: crontab -e
+# */1 * * * *  /home/pi/syncroniser
+
+
+AXIS_IP='192.168.1.100'
+AXIS_PORT='21'
+USER='root'
+PASS='root'
+LOCAL_FOLDER='/mnt/recordings'
+AXIS_SD='/var/spool/storage/SD_DISK' 
+
+# Checks if the script already runs
+
+if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+	exit 1
+fi
+
+# HDD checking
+
+SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+
+if [ "$SPACE" -ge "99" ];then
+	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mkv -printf "%T@ %p\n" | sort -n | head -n 1`
+	echo 'hdd is 99 % full' >> hddfull.log
+fi
+
+# downloads mp4s from AXIS:
+
+wget -m --timeout=1 --tries=1 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db" 
+
+exit 0
