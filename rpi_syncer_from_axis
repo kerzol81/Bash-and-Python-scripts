@@ -4,7 +4,6 @@
 # to make it run in every minute: crontab -e
 # */1 * * * *  /home/pi/syncroniser
 
-
 AXIS_IP='192.168.1.100'
 AXIS_PORT='21'
 USER='root'
