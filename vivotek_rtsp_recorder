@@ -12,7 +12,7 @@ FOLDER="/mnt/hdd/vivotek"
 
 		
 function hddcheck(){		# if the mounted hdd space is over 98% the script exits
-	SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+	SPACE=`df -h | tr -d "%" | grep rootfs | awk '{ print $5 }'`
 		if [ "$SPACE" -ge 98 ];then
 			exit 1
 		fi
@@ -26,6 +26,8 @@ function record(){
 	}
 
 sleep 20					# must wait until rpi syncs from ntp server
+
+mkdir -p $FOLDER
 
 while [ 1 ]; do
 		hddcheck
