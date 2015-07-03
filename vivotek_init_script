@@ -1,0 +1,46 @@
+#!/bin/bash
+# /etc/init.d/vivotekd
+#
+
+### BEGIN INIT INFO
+# Provides:          vivotekd
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start daemon at boot time
+# Description:       Initializes the Vivotek Stream Recorder script.
+### END INIT INFO
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+DAEMON=/usr/bin/vivotekd
+
+test -x $DAEMON | exit 5
+
+. /lib/lsb/init-functions
+
+# start - stop - status functions
+
+case "$1" in
+  
+  start)
+    echo "Starting Vivotek daemon "
+    . /usr/bin/vivotekd &
+    ;;
+  
+  stop)
+    echo "Stopping Vivotek daemon"
+    pkill vivotekd
+    ;;
+  
+  status)
+    status_of_proc $DAEMON $DAEMON
+    ;;
+  
+  *)
+    echo "Usage: /etc/init.d/vivotekd {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
