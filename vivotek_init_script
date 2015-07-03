@@ -38,7 +38,7 @@ case "$1" in
     ;;
   
   *)
-    echo "Usage: /etc/init.d/vivotekd {start|stop}"
+    echo "Usage: /etc/init.d/vivotekd {start|stop|status}"
     exit 1
     ;;
 esac
