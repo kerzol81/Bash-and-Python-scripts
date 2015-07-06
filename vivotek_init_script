@@ -4,8 +4,8 @@
 
 ### BEGIN INIT INFO
 # Provides:          vivotekd
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Required-Start:    ntp
+# Required-Stop:     $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: Start daemon at boot time
