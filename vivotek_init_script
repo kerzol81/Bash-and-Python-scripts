@@ -4,7 +4,7 @@
 
 ### BEGIN INIT INFO
 # Provides:          vivotekd
-# Required-Start:    ntp
+# Required-Start:    networking ntp
 # Required-Stop:     $syslog
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
