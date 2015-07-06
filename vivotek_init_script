@@ -14,6 +14,7 @@
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/vivotekd
+NAME="Vivotek daemon"
 
 test -x $DAEMON | exit 5
 
@@ -24,17 +25,21 @@ test -x $DAEMON | exit 5
 case "$1" in
   
   start)
-    echo "Starting Vivotek daemon "
+    echo "Starting $NAME"
+    log_daemon_msg "Starting $NAME"
     . /usr/bin/vivotekd &
+    log_end_msg $status
     ;;
   
   stop)
-    echo "Stopping Vivotek daemon"
+    echo "Stopping $NAME"
+    log_daemon_msg "Stopping $NAME"
     pkill vivotekd
+    log_end_msg $?
     ;;
   
   status)
-    status_of_proc $DAEMON $DAEMON
+    status_of_proc $DAEMON $NAME
     ;;
   
   *)
