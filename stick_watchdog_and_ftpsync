@@ -5,7 +5,7 @@ scr_folder="/path/to/files"
 
 function reconnect(){
 
-echo "Connecting to..."
+echo "checking connection..."
 
 LC_ALL=C nmcli -t -f TYPE,STATE dev | grep -q "^gsm:disconnected$"
 
