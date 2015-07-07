@@ -2,9 +2,7 @@
 
 echo "Watchdog started..."
 
-while [ 1 ]
-	
-	do
+while [ 1 ]; do
 			LC_ALL=C nmcli -t -f TYPE,STATE dev | grep -q "^gsm:disconnected$"
 			if [ $? -eq 0 ]; then
 				echo 'disconnected, trying to reconnect'
