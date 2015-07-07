@@ -20,8 +20,7 @@ function ftpsync()
 wget -mN  ftp://root:test@192.168.1.100:2121/"$src_folder"
 }
 
-while [ 1 ]
-	do
+while [ 1 ]; do
 		echo "ftpsync..."
 		ftpsync()
 		echo "waiting..."
