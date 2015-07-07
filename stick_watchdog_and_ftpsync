@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 scr_folder="/path/to/files"
 
 function reconnect(){
