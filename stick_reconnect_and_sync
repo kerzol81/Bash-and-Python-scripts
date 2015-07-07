@@ -1,0 +1,31 @@
+#!/bin/bash
+
+
+scr_folder="/path/to/files"
+
+function reconnect(){
+
+echo "Connecting to..."
+
+LC_ALL=C nmcli -t -f TYPE,STATE dev | grep -q "^gsm:disconnected$"
+
+if [ $? -eq 0 ]; then
+	echo 'Disconnected, trying to reconnect'
+	nmcli -t con up id 'tmobile'
+	sleep 3
+fi
+}
+
+function ftpsync()
+{
+wget -mN  ftp://root:test@192.168.1.100:2121/"$src_folder"
+}
+
+while [ 1 ]
+	do
+		echo "ftpsync..."
+		ftpsync()
+		echo "waiting..."
+		sleep 12
+		reconnect()	
+	done
