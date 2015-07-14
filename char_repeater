@@ -9,5 +9,5 @@ if len(sys.argv) == 3:
 
 
 else:
-    print "Usage:\nEnter 2 command line arguments: 1 char and 1 integer; they'll be multiplied\nExample: %s A 100" % sys.argv[0]
+    print "Usage:\nEnter 2 command line arguments!\nExample: %s A 100" % sys.argv[0]
     
