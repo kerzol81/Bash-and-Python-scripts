@@ -36,7 +36,9 @@
 ########################################################################################
 
 SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+ALERT_SIZE="90"
+MAIL_TO="xyz@gmail.com"
 
-if [ "$SPACE" -ge "90" ];then
-  echo "hdd has reached 90%" | mail -s "90% hdd usage" xyz@gmail.com
+if [ "$SPACE" -ge "$ALERT_SIZE" ];then
+  echo "hdd has reached $ALERT_SIZE" | mail -s "$ALERT_SIZE hdd usage" $MAIL_TO
 fi
