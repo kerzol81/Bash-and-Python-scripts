@@ -33,7 +33,6 @@ if [ "$SPACE" -ge "98" ];then
 fi
 
 if [ "$SPACE" -ge "99" ];then
-	echo "hdd is 99% full on raspberry" | mail -s "hdd is 99% full" $MAIL_TO
 	exit 1
 fi
 
