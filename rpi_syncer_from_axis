@@ -21,10 +21,16 @@ fi
 
 SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
 
-if [ "$SPACE" -ge "99" ];then
-	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mkv -printf "%T@ %p\n" | sort -n | head -n 1`
-	echo 'hdd is 99 % full' >> hddfull.log
+if [ "$SPACE" -ge "98" ];then
+	
+	echo 'hdd is 98 % full' > error_`date +%Y-%m-%d_%H_%M`.log
 fi
+
+if [ "$SPACE" -ge "99" ];then
+	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mp4 -printf "%T@ %p\n" | sort -n | head -n 1`
+	exit 1
+fi
+}
 
 # downloads mp4s from AXIS:
 
