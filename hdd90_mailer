@@ -1,0 +1,42 @@
+#!/bin/bash
+
+#   sends mail alerts if hdd is 90 %
+#   to make it run in every hour: crontab -e
+#   0 * * * * /home/pi/hdd90_mailer
+#   gmail lets you send aound 100 mail per day
+
+########################################################################################
+#   EXIM4 CONFIGURATION:
+#
+#   sudo dpkg-reconfigure exim4-config
+#   answer questions like this:
+#   - Select the second option: "mail sent by smarthost; received via SMTP or fetchmail"
+#   - Set to same as hostname (raspberrypi)
+#   - it asks you what IP addresses should be allowed to use the server. Leave as is (127.0.0.1 ; ::1)
+#   - Other destinations for which mail is accepted: raspberrypi
+#   - Machines to relay mail for: Leave blank.
+#   - IP address or host name of outgoing smarthost: Enter: smtp.gmail.com::587
+#   - Hide local mail name in outgoing mail: No
+#   - Keep number of DNS-queries minimal: No
+#   - Delivery method for local mail: Select: "Maildir format in home directory"
+#   - Split configuration into small files: No
+#
+#   edit /etc/exim4/passwd.client
+#   gmail-smtp.l.google.com:xyz@gmail.com:PASSWORD
+#   *.google.com:xyz@gmail.com:PASSWORD
+#   smtp.gmail.com:xyz@gmail.com:PASSWORD
+#
+#   restart service:
+#   sudo update-exim4.conf
+#   sudo /etc/init.d/exim4 restart
+#
+#   testing:
+#   echo "test message" | mail -s "test subject" xyz@gmail.com
+#
+########################################################################################
+
+SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+
+if [ "$SPACE" -ge "90" ];then
+  echo "hdd has reached 90%" | mail -s "90% hdd usage" xyz@gmail.com
+fi
