@@ -22,7 +22,7 @@ fi
 SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
 
 if [ "$SPACE" -ge "97" ];then
-	echo `date +%Y-%m-%d_%H:%M` 'hdd is 97 % full, the oldest files will be deleted soon' >> error.log
+	echo `date +%Y-%m-%d_%H:%M` 'hdd is 97 % full, the oldest mp4 files will be deleted soon' >> error.log
 fi
 
 if [ "$SPACE" -ge "98" ];then
