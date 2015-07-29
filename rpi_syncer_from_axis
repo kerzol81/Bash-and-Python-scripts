@@ -27,7 +27,7 @@ fi
 
 if [ "$SPACE" -ge "98" ];then
 	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mp4 -printf "%T@ %p\n" | sort -n | head -n 1`
-	echo `date +%Y-%m-%d_%H:%M` 'hdd is 98 % full, the oldest files have been deleted' >> error.log
+	echo `date +%Y-%m-%d_%H:%M` 'hdd is 98 % full, the oldest mp4 files have been deleted' >> error.log
 	exit 1
 fi
 
