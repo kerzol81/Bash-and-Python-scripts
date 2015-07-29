@@ -35,8 +35,6 @@ if [ "$SPACE" -ge "99" ];then
 	exit 1
 fi
 
-}
-
 # downloads mp4s from AXIS:
 
 wget -m --timeout=1 --tries=1 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db" 
