@@ -10,7 +10,6 @@ USER='root'
 PASS='root'
 LOCAL_FOLDER='/mnt/recordings'
 AXIS_SD='/var/spool/storage/SD_DISK'
-MAIL_TO="xyz@gmail.com"
 
 # Checks if the script already runs
 
