@@ -1,0 +1,5 @@
+
+#!/bin/bash
+
+
+for i in `netstat -tanl | grep ESTABLISHED | awk -F ':' {'print $2'} | awk {'print $2'}`; do echo $i ;whois $i | grep 'OrgName';echo '---------------------------'; done
