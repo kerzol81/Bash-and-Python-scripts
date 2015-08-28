@@ -5,7 +5,7 @@ USERNAME="root"
 PASSWD="root"
 SPLIT="300" 				# 300 = 5 min
 STREAM="rtsp://$USERNAME:$PASSWD@$AXIS_IP/axis-media/media.amp"	# 1st stream on Axis: rtsp://user:passwd@192.168.1.100/axis-media/media.amp
-FOLDER="/mnt/hdd/vivotek"
+FOLDER="/mnt/hdd/axis"
 
 
 		
