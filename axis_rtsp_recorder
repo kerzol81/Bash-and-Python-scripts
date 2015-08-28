@@ -17,7 +17,7 @@ function hddcheck(){		# if the mounted hdd space is over 98% the script exits
 	}
 
 function record(){
-				# thanks for parapoke :-)	
+				# thanks for PokE :-)	
 	mkdir -p $FOLDER/`date +%Y-%m-%d__$AXIS_IP`
 	vlc $STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$AXIS_IP`/`date +%Y-%m-%d__%H_%M`.mp4
 	
