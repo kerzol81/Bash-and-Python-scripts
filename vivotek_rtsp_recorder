@@ -8,11 +8,11 @@ SPLIT="300" 				# 300 = 5 min
 
 STREAM="live2.sdp"			# 1st stream on Vivotek: rtsp://user:passwd@192.168.1.100:554/live.sdp
 FOLDER="/mnt/hdd/vivotek"
-
+DEVICE="sda"
 
 		
 function hddcheck(){		# if the mounted hdd space is over 98% the script exits
-	SPACE=`df -h | tr -d "%" | grep rootfs | awk '{ print $5 }'`
+	SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
 		if [ "$SPACE" -ge 98 ];then
 			exit 1
 		fi
