@@ -3,9 +3,7 @@
 VIVOTEK_IP="192.168.1.10"
 USERNAME="root"
 PASSWD="root"
-
 SPLIT="300" 				# 300 = 5 min
-
 STREAM="live2.sdp"			# 1st stream on Vivotek: rtsp://user:passwd@192.168.1.100:554/live.sdp
 FOLDER="/mnt/hdd/vivotek"
 DEVICE="sda"
