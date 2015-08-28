@@ -25,7 +25,7 @@ function record(){
 	
 	}
 
-sleep 20					# must wait until rpi syncs from ntp server
+sleep 40					# must wait until rpi syncs from ntp server
 
 mkdir -p $FOLDER
 
