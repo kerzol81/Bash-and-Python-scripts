@@ -6,11 +6,11 @@ PASSWD="root"
 SPLIT="300" 				# 300 = 5 min
 STREAM="rtsp://$USERNAME:$PASSWD@$AXIS_IP/axis-media/media.amp"	# 1st stream on Axis: rtsp://user:passwd@192.168.1.100/axis-media/media.amp
 FOLDER="/mnt/hdd/axis"
-
+HDD="sda"
 
 		
 function hddcheck(){		# if the mounted hdd space is over 98% the script exits
-	SPACE=`df -h | tr -d "%" | grep rootfs | awk '{ print $5 }'`
+	SPACE=`df -h | tr -d "%" | grep $HDD | awk '{ print $5 }'`
 		if [ "$SPACE" -ge 98 ];then
 			exit 1
 		fi
