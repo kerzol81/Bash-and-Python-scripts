@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# RTSP stream recorging from AXIS or Vivotek videoservers
+# RTSP stream recording from AXIS or VIVOTEK videoservers
 
 
 VIDEOSERVER="192.168.1.10"
