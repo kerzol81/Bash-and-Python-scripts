@@ -1,0 +1,59 @@
+#!/bin/bash
+
+# RTSP stream recorging from AXIS or Vivotek videoservers
+
+
+VIDEOSERVER="192.168.1.10"
+VENDOR="axis"				# vivotek, axis
+USERNAME="root"
+PASSWORD="root"
+SPLIT="300" 				# 300 = 5 min
+FOLDER="/mnt/recordings"
+DEVICE="sda"
+
+# getting the rtsp stream according to vendor
+
+if [ "$VENDOR" == "vivotek" ];then
+	STREAM="rtsp://$USERNAME:$PASSWORD@$VIDEOSERVER:554/live2.sdp"
+
+
+elif [ "$VENDOR" == "axis" ];then
+	STREAM="rtsp://$USERNAME:$PASSWORD@$VIDEOSERVER/axis-media/media.amp"
+
+else
+	echo "no vendor specified" 
+	exit 1
+	
+fi
+
+# function definitions:
+
+		
+function hddcheck(){		
+	# if the mounted hdd space is over 98% the script exits
+	SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
+		if [ "$SPACE" -ge 98 ];then
+			exit 1
+		fi
+	}
+
+function record(){
+	# thanks for parapoke :-)	
+	mkdir -p $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`
+	vlc $STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`/`date +%Y-%m-%d__%H_%M`.mp4
+	
+	}
+	
+# recording:
+
+sleep 40					# must wait until rpi syncs from ntp server
+
+mkdir -p $FOLDER
+
+while [ 1 ]; do
+		hddcheck
+		record
+done
+
+# TODO
+# make a 2nd hddcheck function which deletes the oldest folder
