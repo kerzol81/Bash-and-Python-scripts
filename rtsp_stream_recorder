@@ -44,6 +44,11 @@ function record(){
 	
 	}
 	
+function rmChunks(){
+	find $FOLDER -type f -name "*.mp4" -size -512k -exec rm {} \;
+	}
+
+	
 # recording:
 
 sleep 40					# must wait until rpi syncs from ntp server
@@ -53,6 +58,7 @@ mkdir -p $FOLDER
 while [ 1 ]; do
 		hddcheck
 		record
+		rmChunks
 done
 
 # TODO
