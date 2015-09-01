@@ -35,7 +35,7 @@ fi
 for i in `find $FROM_FOLDER -name *.mkv | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
 	do 
 		if [ ! -d $i ]; then
-			mkdir $i
+			mkdir -p $i
 			mv -u `find $FROM_FOLDER -name $i*.mkv` $i
 		else
 			mv -u `find $FROM_FOLDER -name $i*.mkv` $i
