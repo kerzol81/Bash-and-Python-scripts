@@ -35,6 +35,7 @@ mkdir -p $FOLDER
 while [ 1 ]; do
 		hddcheck
 		record
+		rmChunks
 done
 
 # TODO
