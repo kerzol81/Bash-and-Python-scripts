@@ -23,6 +23,11 @@ function record(){
 	
 	}
 
+function rmChunks(){
+	find $FOLDER -type f -name "*.mp4" -size -512k -exec rm {} \;
+	}
+
+
 sleep 40					# must wait until rpi syncs from ntp server
 
 mkdir -p $FOLDER
@@ -33,4 +38,5 @@ while [ 1 ]; do
 done
 
 # TODO
-# make a 2nd hddcheck function which deletes the oldest folder
+# make a 2nd hddcheck function which deletes the oldest folder - DONE
+# compare vivotek log files, with recorded mp4s to detect motion
