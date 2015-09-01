@@ -1,0 +1,48 @@
+#!/bin/bash
+
+FROM_FOLDER="/mnt/recordings"
+TO_FOLDER="/mnt/recordings/axis"
+AXIS_IP="192.168.88.100"
+
+
+# exits if AXIS is available
+ping -c 2 $AXIS_IP
+if [ $? -eq "0" ]; then
+	echo 'Cannot do the foldering while syncing...'
+	exit 1
+fi
+
+
+mkdir -p $TO_FOLDER
+cd $TO_FOLDER
+
+# exit if the script is already running
+if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+	exit 1
+fi
+
+# hdd check:
+SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+MAX=99
+
+# deletes the oldest folder
+if [ "$SPACE" -ge "$MAX" ];then
+	rm -rf `ls -t | tail -n 1`
+fi
+
+# arranging
+
+for i in `find $FROM_FOLDER -name *.mkv | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
+	do 
+		if [ ! -d $i ]; then
+			mkdir $i
+			mv -u `find $FROM_FOLDER -name $i*.mkv` $i
+		else
+			mv -u `find $FROM_FOLDER -name $i*.mkv` $i
+		fi
+
+	done
+
+exit 0
+
+
