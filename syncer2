@@ -1,0 +1,53 @@
+#!/bin/bash
+# syncronising and arranging files from an AXIS server
+
+AXIS_IP="192.168.1.10"
+AXIS_PORT='21'
+USER='root'
+PASS='root'
+LOCAL_FOLDER='/mnt/recordings'
+AXIS_SD='/var/spool/storage/SD_DISK'
+FROM_FOLDER="/mnt/recordings"
+TO_FOLDER="/mnt/recordings/arranged"
+MAX="99"
+EXTENSION="mkv"
+
+
+function syncronising(){
+
+	wget -m --timeout=1 --tries=1 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
+
+}
+
+
+function arranging(){
+
+	mkdir -p $TO_FOLDER
+	cd $TO_FOLDER
+
+	# deletes the oldest folder
+	if [ "$SPACE" -ge "$MAX" ];then
+		rm -rf `ls -t | tail -n 1`
+	fi
+
+	# arranging
+
+	for i in `find $FROM_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
+		do 
+			if [ ! -d $i ]; then
+				mkdir -p $i
+				mv -u `find $FROM_FOLDER -name $i*.mkv` $i
+			else
+				mv -u `find $FROM_FOLDER -name $i*.mkv` $i
+			fi
+
+		done
+}
+
+
+
+while [ 1 ]; do
+	syncronising
+	arranging
+	sleep 60
+done
