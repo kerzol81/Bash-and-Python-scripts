@@ -22,11 +22,11 @@ fi
 SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
 
 if [ "$SPACE" -ge "97" ];then
-	echo `date +%Y-%m-%d_%H:%M` 'hdd is 97 % full, the oldest mp4 files will be deleted soon' >> error.log
+	echo `date +%Y-%m-%d_%H:%M` 'hdd is 97 % full, the oldest mkv files will be deleted soon' >> error.log
 fi
 
 if [ "$SPACE" -ge "98" ];then
-	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mp4 -printf "%T@ %p\n" | sort -n | head -n 1`
+	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mkv -printf "%T@ %p\n" | sort -n | head -n 1`
 	echo `date +%Y-%m-%d_%H:%M` 'hdd is 98 % full, the oldest mp4 files have been deleted' >> error.log
 	exit 1
 fi
