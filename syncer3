@@ -5,10 +5,11 @@ AXIS_IP="192.168.10.10"
 AXIS_PORT='21'
 USER='root'
 PASS='root'
+ID="arranged"
 AXIS_SD="/var/spool/storage/SD_DISK"
 EXTENSION="mkv"
 LOCAL_FOLDER="/mnt/recordings"
-TO_FOLDER="$LOCAL_FOLDER/$AXIS_IP/arranged"
+TO_FOLDER="$LOCAL_FOLDER/$AXIS_IP/$ID"
 
 function isHdd(){
 	while [ 1 ];do
