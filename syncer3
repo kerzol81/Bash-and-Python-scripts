@@ -10,6 +10,15 @@ EXTENSION="mkv"
 LOCAL_FOLDER="/mnt/recordings"
 TO_FOLDER="$LOCAL_FOLDER/$AXIS_IP/arranged"
 
+function isHdd(){
+	while [ 1 ];do
+		ls $LOCAL_FOLDER
+		if [ $? -ne 0 ];then
+			echo "no hdd attached"
+			break
+		fi
+	done
+}
 
 function hddcheck(){
 		# deletes the oldest folder if hdd reaches 95 %
@@ -42,6 +51,7 @@ function arrange(){
 
 while [ 1 ];do
 
+isHdd
 mkdir -p $LOCAL_FOLDER
 cd $LOCAL_FOLDER
 
