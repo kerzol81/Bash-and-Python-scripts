@@ -13,10 +13,10 @@ TO_FOLDER="$LOCAL_FOLDER/$AXIS_IP/$ID"
 
 function isHdd(){
 	while [ 1 ];do
-		ls $LOCAL_FOLDER
+		ls $LOCAL_FOLDER &>/dev/null
 		if [ $? -ne 0 ];then
 			echo "no hdd attached"
-			sleep 5s
+			sleep 3s
 			continue
 		fi
 	done
