@@ -1,0 +1,63 @@
+#!/bin/bash
+# syncronising from AXIS server 		version 3
+
+AXIS_IP="192.168.10.10"
+AXIS_PORT='21'
+USER='root'
+PASS='root'
+AXIS_SD="/var/spool/storage/SD_DISK"
+EXTENSION="mkv"
+LOCAL_FOLDER="/mnt/recordings"
+TO_FOLDER="$LOCAL_FOLDER/$AXIS_IP/arranged"
+
+
+function hddcheck(){
+		# deletes the oldest folder if hdd reaches 95 %
+	SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+	MAX=95
+
+	if [ "$SPACE" -ge "$MAX" ];then
+		rm -rf `ls -t | tail -n 1`
+	fi
+}
+
+function sync(){
+		# downloading files
+	wget -m --timeout=1 --tries=1 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
+}
+
+function arrange(){
+		# moves out the files from subdirectories
+	for i in `find $LOCAL_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`;do
+		if [ ! -d $i ]; then
+			mkdir -p $i
+			mv -u `find $LOCAL_FOLDER -name $i*.$EXTENSION` $i
+		else
+			mv -u `find $LOCAL_FOLDER -name $i*.$EXTENSION` $i
+		fi
+	done
+}
+
+
+
+while [ 1 ];do
+
+mkdir -p $LOCAL_FOLDER
+cd $LOCAL_FOLDER
+
+	while [ 1 ];do
+
+		hddcheck
+		sync
+
+		if [ $? -ne 0 ];then
+			break
+		fi
+
+		arrange
+
+		sleep 30s
+
+		done
+	sleep 30s
+done
