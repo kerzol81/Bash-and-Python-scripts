@@ -15,7 +15,8 @@ function isHdd(){
 		ls $LOCAL_FOLDER
 		if [ $? -ne 0 ];then
 			echo "no hdd attached"
-			break
+			sleep 5s
+			continue
 		fi
 	done
 }
