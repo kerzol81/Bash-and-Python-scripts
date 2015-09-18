@@ -34,7 +34,7 @@ function hddcheck(){
 
 function sync(){
 		# downloading files
-	wget -m --timeout=1 --tries=1 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
+	wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
 }
 
 function arrange(){
