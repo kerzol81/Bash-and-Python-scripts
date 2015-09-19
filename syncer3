@@ -54,23 +54,23 @@ function arrange(){
 
 while [ 1 ];do
 
-isHdd
-mkdir -p $LOCAL_FOLDER
-cd $LOCAL_FOLDER
-
-	while [ 1 ];do
-
-		hddcheck
-		sync
-
-		if [ $? -ne 0 ];then
-			break
-		fi
-
-		arrange
-
-		sleep 30s
-
+	isHdd
+	mkdir -p $LOCAL_FOLDER
+	cd $LOCAL_FOLDER
+	
+		while [ 1 ];do
+	
+			hddcheck
+			sync
+	
+			if [ $? -ne 0 ];then
+				break
+			fi
+	
+			arrange
+	
+			sleep 30s
+	
 		done
-	sleep 30s
+		sleep 30s
 done
