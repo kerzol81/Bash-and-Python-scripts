@@ -1,5 +1,6 @@
 #!/bin/bash
-# syncronising from AXIS server 		version 3
+# Raspberry Pi 
+# syncroniser script from AXIS server 		version 3
 
 AXIS_IP="192.168.10.10"
 AXIS_PORT='21'
@@ -39,7 +40,7 @@ function sync(){
 
 function arrange(){
 		# moves out the files from subdirectories
-	for i in `find $LOCAL_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`;do
+	for i in `find $LOCAL_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'| awk -F '/' '{print $2}'| sort | uniq`;do
 		if [ ! -d $i ]; then
 			mkdir -p $i
 			mv -u `find $LOCAL_FOLDER -name $i*.$EXTENSION` $i
