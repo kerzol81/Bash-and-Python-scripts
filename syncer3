@@ -54,7 +54,7 @@ function arrange(){
 
 while [ 1 ];do
 
-	isHdd
+	#isHdd
 	mkdir -p $LOCAL_FOLDER
 	cd $LOCAL_FOLDER
 	
@@ -65,10 +65,11 @@ while [ 1 ];do
 	
 			if [ $? -ne 0 ];then
 				break
+			else
+	
+				arrange
 			fi
-	
-			arrange
-	
+			
 			sleep 30s
 	
 		done
