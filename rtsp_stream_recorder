@@ -21,7 +21,7 @@ function get_stream_according_to_vendor(){
 	
 	else
 		echo "no vendor specified" 
-		exit 1
+		break
 	fi
 }
 
