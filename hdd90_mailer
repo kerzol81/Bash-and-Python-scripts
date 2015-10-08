@@ -2,8 +2,8 @@
 
 #   sends mail alerts if hdd is 90 %
 #   to make it run in every hour: crontab -e
-#   0 * * * * /home/pi/hdd90_mailer
-#   gmail lets you send aound 100 mail per day
+#   0 * * * * /home/pi/scripts/hdd90_mailer
+#   gmail lets you send around 100 mail per day
 
 ########################################################################################
 #   EXIM4 CONFIGURATION:
