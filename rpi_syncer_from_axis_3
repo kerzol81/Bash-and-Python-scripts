@@ -1,6 +1,6 @@
 #!/bin/bash
-# Raspberry Pi 
-# syncroniser script from AXIS server 			version 3 with 2 'while true', ugly but working script
+# Raspberry Pi syncroniser script from AXIS server 			version 3 
+# with 2 'while true', ugly but working script
 # to make it a daemon with cron: crontab -e
 # @reboot /home/pi/scripts/syncroniser
 
