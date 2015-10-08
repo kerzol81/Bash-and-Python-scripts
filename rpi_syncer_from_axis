@@ -13,13 +13,12 @@ AXIS_SD='/var/spool/storage/SD_DISK'
 
 function external_hdd_checker(){
 	
-			ls $LOCAL_FOLDER >/dev/null
-			
-			if [ $? -ne 0 ];then
-				echo 'there is no HDD attached'
-				exit 1
-			fi
-	
+		ls $LOCAL_FOLDER >/dev/null
+		
+		if [ $? -ne 0 ];then
+			echo 'there is no HDD attached'
+			exit 1
+		fi
 }
 
 function no_multiple_instance(){
@@ -60,16 +59,14 @@ function download_from_axis(){
 			echo 'could not download from server'
 			exit 5
 		fi
-
-
 }
 
 
 ###
 
 main() {
-    external_hdd_checker
-    no_multiple_instance
+	external_hdd_checker
+	no_multiple_instance
 	hdd_checker
 	download_from_axis
 }
