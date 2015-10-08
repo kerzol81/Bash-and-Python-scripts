@@ -1,6 +1,8 @@
 #!/bin/bash
 # Raspberry Pi 
-# syncroniser script from AXIS server 		version 3
+# syncroniser script from AXIS server 			version 3 with 2 'while true', ugly but working script
+# to make it a daemon with cron: crontab -e
+# @reboot /home/pi/scripts/syncroniser
 
 AXIS_IP="192.168.10.10"
 AXIS_PORT='21'
@@ -12,7 +14,7 @@ EXTENSION="mkv"
 LOCAL_FOLDER="/mnt/recordings"
 TO_FOLDER="$LOCAL_FOLDER/$AXIS_IP/$ID"
 
-function isHdd(){
+function is_external_hdd(){
 	while [ 1 ];do
 		ls $LOCAL_FOLDER &>/dev/null
 		if [ $? -ne 0 ];then
@@ -54,7 +56,7 @@ function arrange(){
 
 while [ 1 ];do
 
-	#isHdd
+	#is_external_hdd
 	mkdir -p $LOCAL_FOLDER
 	cd $LOCAL_FOLDER
 	
@@ -66,7 +68,6 @@ while [ 1 ];do
 			if [ $? -ne 0 ];then
 				break
 			else
-	
 				arrange
 			fi
 			
