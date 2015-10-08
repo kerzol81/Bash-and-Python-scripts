@@ -1,6 +1,5 @@
 #!/bin/bash
-# syncing from AXIS video server				06.10.2015
-
+# syncroniser script from an AXIS video server				06.10.2015
 # to make it run in every minute: crontab -e
 # */1 * * * *  /home/pi/syncroniser
 
