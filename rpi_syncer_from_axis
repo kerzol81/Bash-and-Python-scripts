@@ -1,5 +1,5 @@
 #!/bin/bash
-# syncing from AXIS video server
+# syncing from AXIS video server				06.10.2015
 
 # to make it run in every minute: crontab -e
 # */1 * * * *  /home/pi/syncroniser
@@ -11,32 +11,52 @@ PASS='root'
 LOCAL_FOLDER='/mnt/recordings'
 AXIS_SD='/var/spool/storage/SD_DISK'
 
-# Checks if the script already runs
 
-if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
-	exit 1
-fi
+function no_multiple_instance(){
 
-# HDD checking
+		if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+			echo 'only one instance is allowed'
+			exit 1
+		fi
+}
 
-SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
 
-if [ "$SPACE" -ge "97" ];then
-	echo `date +%Y-%m-%d_%H:%M` 'hdd is 97 % full, the oldest mkv files will be deleted soon' >> error.log
-fi
+function hdd_checker(){
+		
+		SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
 
-if [ "$SPACE" -ge "98" ];then
-	rm -rf `find $LOCAL_FOLDER ! -type d -name *.mkv -printf "%T@ %p\n" | sort -n | head -n 1`
-	echo `date +%Y-%m-%d_%H:%M` 'hdd is 98 % full, the oldest mp4 files have been deleted' >> error.log
-	exit 1
-fi
+		if [ "$SPACE" -ge "97" ];then
+			echo `date +%Y-%m-%d_%H:%M` 'hdd is 97 % full, the oldest mkv files will be deleted soon' >> error.log
+		fi
+		
+		if [ "$SPACE" -ge "98" ];then
+			rm -rf `find $LOCAL_FOLDER ! -type d -name *.mkv -printf "%T@ %p\n" | sort -n | head -n 1`
+			echo `date +%Y-%m-%d_%H:%M` 'hdd is 98 % full, the oldest mkv files have been deleted' >> error.log
+			exit 2	
+		fi
+		
+		if [ "$SPACE" -ge "99" ];then
+			exit 3
+		fi
+}
 
-if [ "$SPACE" -ge "99" ];then
-	exit 1
-fi
+function download_from_axis(){
 
-# downloads mp4s from AXIS:
+		wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db" 
+		
+		if [ $? -ne 0 ];then
+			echo 'could not download from server'
+			exit 4
+		fi
 
-wget -m --timeout=1 --tries=1 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db" 
+
+}
+
+
+###
+
+no_multiple_instance
+hdd_checker
+download_from_axis
 
 exit 0
