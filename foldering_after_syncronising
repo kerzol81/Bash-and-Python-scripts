@@ -1,36 +1,20 @@
 #!/bin/bash
 
+AXIS_IP="192.168.1.100"
 FROM_FOLDER="/mnt/recordings"
-TO_FOLDER="/mnt/recordings/axis"
-AXIS_IP="192.168.88.100"
+TO_FOLDER="/mnt/recordings/$AXIS_IP"
+
+function delete_oldest(){
+	MAX=99
+	SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+	
+	if [ "$SPACE" -ge "$MAX" ];then
+		rm -rf `ls -t | tail -n 1`
+	fi
+}
 
 
-# exits if AXIS is available
-ping -c 2 $AXIS_IP
-if [ $? -eq "0" ]; then
-	echo 'Cannot do the foldering while syncing...'
-	exit 1
-fi
-
-
-mkdir -p $TO_FOLDER
-cd $TO_FOLDER
-
-# exit if the script is already running
-if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
-	exit 1
-fi
-
-# hdd check:
-SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
-MAX=99
-
-# deletes the oldest folder
-if [ "$SPACE" -ge "$MAX" ];then
-	rm -rf `ls -t | tail -n 1`
-fi
-
-# arranging
+function arrange(){
 
 for i in `find $FROM_FOLDER -name *.mkv | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
 	do 
@@ -42,6 +26,15 @@ for i in `find $FROM_FOLDER -name *.mkv | awk -F '_' '{print $5}'|awk -F '/' '{p
 		fi
 
 	done
+}
+main(){
+	mkdir -p $TO_FOLDER
+	cd $TO_FOLDER	
+	#delete_oldest
+	arrange
+}
+
+main
 
 exit 0
 
