@@ -1,7 +1,5 @@
 #!/bin/bash
 # syncroniser script from an AXIS video server				06.10.2015
-# to make it run in every minute: crontab -e
-# */1 * * * *  /home/pi/syncroniser
 
 AXIS_IP='192.168.1.100'
 AXIS_PORT='21'
@@ -9,6 +7,21 @@ USER='root'
 PASS='root'
 LOCAL_FOLDER='/mnt/recordings'
 AXIS_SD='/var/spool/storage/SD_DISK'
+
+usage() {
+	readonly PROGNAME=`basename $0`
+
+	cat <<- EOF
+	usage of $PROGNAME script
+	
+	the script will exit if it has already been started
+	to make it run in every minute: 
+	
+	crontab -e and append this:
+	
+	*/1 * * * *  /path/to/script/$PROGNAME
+	EOF
+}
 
 function external_hdd_checker(){
 	
