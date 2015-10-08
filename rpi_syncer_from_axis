@@ -11,12 +11,22 @@ PASS='root'
 LOCAL_FOLDER='/mnt/recordings'
 AXIS_SD='/var/spool/storage/SD_DISK'
 
+function external_hdd_checker(){
+	
+			ls $LOCAL_FOLDER >/dev/null
+			
+			if [ $? -ne 0 ];then
+				echo 'there is no HDD attached'
+				exit 1
+			fi
+	
+}
 
 function no_multiple_instance(){
 
 		if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
 			echo 'only one instance is allowed'
-			exit 1
+			exit 2
 		fi
 }
 
@@ -32,21 +42,23 @@ function hdd_checker(){
 		if [ "$SPACE" -ge "98" ];then
 			rm -rf `find $LOCAL_FOLDER ! -type d -name *.mkv -printf "%T@ %p\n" | sort -n | head -n 1`
 			echo `date +%Y-%m-%d_%H:%M` 'hdd is 98 % full, the oldest mkv files have been deleted' >> error.log
-			exit 2	
+			exit 3	
 		fi
 		
 		if [ "$SPACE" -ge "99" ];then
-			exit 3
+			exit 4
 		fi
 }
 
 function download_from_axis(){
-
+		
+		cd $LOCAL_FOLDER
+		
 		wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db" 
 		
 		if [ $? -ne 0 ];then
 			echo 'could not download from server'
-			exit 4
+			exit 5
 		fi
 
 
@@ -55,8 +67,13 @@ function download_from_axis(){
 
 ###
 
-no_multiple_instance
-hdd_checker
-download_from_axis
+main() {
+    external_hdd_checker
+    no_multiple_instance
+	hdd_checker
+	download_from_axis
+}
+
+main
 
 exit 0
