@@ -31,7 +31,7 @@ function remove_oldest_files_97(){
 	local MAX=97
 
 	if [ "$SPACE" -ge "$MAX" ];then
-		rm -rf `ls -t | tail -n 1`
+		rm -rf `ls -lt | grep '^d' | tail -n 1 | awk '{print $NF}'`
 	fi
 	
 }
@@ -40,7 +40,7 @@ function exit_if_hdd_reaches_98(){
 	# if the mounted hdd space is over 98% the script exits
 	local SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
 		if [ "$SPACE" -ge 98 ];then
-			exit 1
+			break
 		fi
 	}
 
