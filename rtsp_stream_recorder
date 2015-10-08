@@ -65,10 +65,10 @@ mkdir -p $FOLDER
 cd $FOLDER
 
 while [ 1 ]; do
-		remove_oldest_files_97
-		exit_if_hdd_reaches_98
-		record
-		remove_chunks
+		remove_oldest_files_97 &
+		exit_if_hdd_reaches_98 &
+		record &
+		remove_chunks &
 done
 
 # TODO
