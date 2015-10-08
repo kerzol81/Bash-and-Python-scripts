@@ -39,9 +39,10 @@ function remove_oldest_files_97(){
 function exit_if_hdd_reaches_98(){		
 	# if the mounted hdd space is over 98% the script exits
 	local SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
-		if [ "$SPACE" -ge 98 ];then
-			break
-		fi
+		
+	if [ "$SPACE" -ge 98 ];then
+		break
+	fi
 	}
 
 function record(){
