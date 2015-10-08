@@ -61,6 +61,7 @@ function remove_chunks(){
 sleep 40					# must wait until rpi syncs from ntp server
 
 mkdir -p $FOLDER
+cd $FOLDER
 
 while [ 1 ]; do
 		remove_oldest_files_97
