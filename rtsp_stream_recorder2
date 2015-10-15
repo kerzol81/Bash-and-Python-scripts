@@ -2,8 +2,7 @@
 
 # RTSP stream recording from AXIS or VIVOTEK videoservers
 # run it with cron:
-# */10 * * * * /path/to/scriptname
-
+# */10 * * * * /path/to/script
 
 VIDEOSERVER='192.168.1.10'
 VENDOR='axis'				# vivotek, axis
@@ -11,7 +10,18 @@ USERNAME='root'
 PASSWORD='root'
 SPLIT='600' 				# 300 = 5 min
 FOLDER='/mnt/recordings'
-DEVICE='sda'
+DEVICE='sda'				# external HDD on Raspberry Pi
+
+
+function is_hdd_attached(){
+	mkdir -p $FOLDER
+	if [ $? -ne 0 ];then
+		echo "no hdd attached"
+		exit 1
+	fi
+		
+}
+
 
 function get_stream_according_to_vendor(){
 
@@ -27,6 +37,7 @@ function get_stream_according_to_vendor(){
 	fi
 }
 
+
 function remove_oldest_files_97(){
 	
 	local SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
@@ -36,6 +47,7 @@ function remove_oldest_files_97(){
 		rm -rf `ls -lt | grep '^d' | tail -n 1 | awk '{print $NF}'`
 	fi
 }
+
 		
 function exit_if_hdd_reaches_98(){		
 	# if the mounted hdd space is over 98% the script exits
@@ -47,11 +59,13 @@ function exit_if_hdd_reaches_98(){
 	fi
 }
 
+
 function record(){
 	# thanks for Poke :-)	
 	mkdir -p $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`
 	vlc $STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`/`date +%Y-%m-%d__%H_%M`.mp4
 }
+
 	
 function remove_chunks(){
 	find $FOLDER -type f -name "*.mp4" -size -512k -exec rm {} \;
@@ -59,7 +73,7 @@ function remove_chunks(){
 
 
 funtion main(){	
-	mkdir -p $FOLDER
+	is_hdd_attached
 	cd $FOLDER
 	get_stream_according_to_vendor
 	remove_oldest_files_97
