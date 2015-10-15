@@ -74,6 +74,7 @@ function remove_chunks(){
 
 
 funtion main(){	
+
 	is_hdd_attached
 	cd $FOLDER
 	get_stream_according_to_vendor
