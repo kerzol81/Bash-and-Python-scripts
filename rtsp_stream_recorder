@@ -39,9 +39,10 @@ function remove_oldest_files_97(){
 function exit_if_hdd_reaches_98(){		
 	# if the mounted hdd space is over 98% the script exits
 	local SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
+	local MAX=98
 		
-	if [ "$SPACE" -ge 98 ];then
-		break
+	if [ "$SPACE" -ge "$MAX" ];then
+		exit 1
 	fi
 	}
 
@@ -62,16 +63,21 @@ function remove_chunks(){
 sleep 40					# must wait until rpi syncs from ntp server
 
 mkdir -p $FOLDER
+if [ $? -ne 0 ];then
+	echo "no hdd attached"
+	exit 1
+fi
+
 cd $FOLDER
 
 while [ 1 ]; do
 		get_stream_according_to_vendor
-		remove_oldest_files_97 &
-		exit_if_hdd_reaches_98 &
-		record &
-		remove_chunks &
+		remove_oldest_files_97
+		exit_if_hdd_reaches_98
+		record
+		remove_chunks
 done
 
 # TODO
-# debug and run it for at least a week
+# 
 # get time from videoserver if no internet access
