@@ -14,12 +14,12 @@ DEVICE='sda'				# external HDD on Raspberry Pi
 
 
 function is_hdd_attached(){
+
 	mkdir -p $FOLDER
 	if [ $? -ne 0 ];then
 		echo "no hdd attached"
 		exit 1
 	fi
-		
 }
 
 
@@ -55,7 +55,7 @@ function exit_if_hdd_reaches_98(){
 	local MAX=98
 		
 	if [ "$SPACE" -ge "$MAX" ];then
-		break
+		exit 2
 	fi
 }
 
@@ -68,6 +68,7 @@ function record(){
 
 	
 function remove_chunks(){
+
 	find $FOLDER -type f -name "*.mp4" -size -512k -exec rm {} \;
 }
 
@@ -86,4 +87,4 @@ main
 
 # TODO
 # 
-# get time from videoserver if no internet access
+# get time from videoserver if there is no ntp server
