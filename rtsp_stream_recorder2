@@ -33,7 +33,7 @@ function get_stream_according_to_vendor(){
 	
 	else
 		echo "no vendor specified" 
-		break
+		exit 2
 	fi
 }
 
@@ -55,7 +55,7 @@ function exit_if_hdd_reaches_98(){
 	local MAX=98
 		
 	if [ "$SPACE" -ge "$MAX" ];then
-		exit 2
+		exit 3
 	fi
 }
 
