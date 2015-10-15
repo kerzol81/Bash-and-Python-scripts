@@ -9,7 +9,7 @@ VIDEOSERVER='192.168.1.10'
 VENDOR='axis'				# vivotek, axis
 USERNAME='root'
 PASSWORD='root'
-SPLIT='300' 				# 300 = 5 min
+SPLIT='600' 				# 300 = 5 min
 FOLDER='/mnt/recordings'
 DEVICE='sda'
 
@@ -58,18 +58,17 @@ function remove_chunks(){
 	find $FOLDER -type f -name "*.mp4" -size -512k -exec rm {} \;
 	}
 
-	
-# recording:
 
-mkdir -p $FOLDER
-cd $FOLDER
-
-get_stream_according_to_vendor
-remove_oldest_files_97
-exit_if_hdd_reaches_98
-record
-remove_chunks
-
+funtion main(){	
+	mkdir -p $FOLDER
+	cd $FOLDER
+	get_stream_according_to_vendor
+	remove_oldest_files_97
+	exit_if_hdd_reaches_98
+	record
+	remove_chunks
+	}
+main
 
 # TODO
 # 
