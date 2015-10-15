@@ -65,6 +65,7 @@ mkdir -p $FOLDER
 cd $FOLDER
 
 while [ 1 ]; do
+		get_stream_according_to_vendor
 		remove_oldest_files_97 &
 		exit_if_hdd_reaches_98 &
 		record &
@@ -73,3 +74,4 @@ done
 
 # TODO
 # debug and run it for at least a week
+# get time from videoserver if no internet access
