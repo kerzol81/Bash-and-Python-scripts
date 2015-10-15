@@ -2,13 +2,13 @@
 
 # RTSP stream recording from AXIS or VIVOTEK videoservers
 # run it with cron:
-# */10 * * * * /path/to/script
+# */5 * * * * /path/to/script
 
 VIDEOSERVER='192.168.1.10'
 VENDOR='axis'				# vivotek, axis
 USERNAME='root'
 PASSWORD='root'
-SPLIT='600' 				# 300 = 5 min
+SPLIT='300' 				# 300 = 5 min
 FOLDER='/mnt/recordings'
 DEVICE='sda'				# external HDD on Raspberry Pi
 
