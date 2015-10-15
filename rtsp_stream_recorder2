@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# RTSP stream recording from AXIS or VIVOTEK videoservers
+# run it with cron:
+# */10 * * * * /path/to/scriptname
+
+
+VIDEOSERVER='192.168.1.10'
+VENDOR='axis'				# vivotek, axis
+USERNAME='root'
+PASSWORD='root'
+SPLIT='300' 				# 300 = 5 min
+FOLDER='/mnt/recordings'
+DEVICE='sda'
+
+function get_stream_according_to_vendor(){
+
+	if [ "$VENDOR" == "vivotek" ];then
+		STREAM="rtsp://$USERNAME:$PASSWORD@$VIDEOSERVER:554/live2.sdp"
+
+	elif [ "$VENDOR" == "axis" ];then
+		STREAM="rtsp://$USERNAME:$PASSWORD@$VIDEOSERVER/axis-media/media.amp"
+	
+	else
+		echo "no vendor specified" 
+		break
+	fi
+}
+
+function remove_oldest_files_97(){
+	
+	local SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+	local MAX=97
+
+	if [ "$SPACE" -ge "$MAX" ];then
+		rm -rf `ls -lt | grep '^d' | tail -n 1 | awk '{print $NF}'`
+	fi
+	
+}
+		
+function exit_if_hdd_reaches_98(){		
+	# if the mounted hdd space is over 98% the script exits
+	local SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
+		
+	if [ "$SPACE" -ge 98 ];then
+		break
+	fi
+	}
+
+function record(){
+	# thanks for Poke :-)	
+	mkdir -p $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`
+	vlc $STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`/`date +%Y-%m-%d__%H_%M`.mp4
+	
+	}
+	
+function remove_chunks(){
+	find $FOLDER -type f -name "*.mp4" -size -512k -exec rm {} \;
+	}
+
+	
+# recording:
+
+mkdir -p $FOLDER
+cd $FOLDER
+
+get_stream_according_to_vendor
+remove_oldest_files_97
+exit_if_hdd_reaches_98
+record
+remove_chunks
+
+
+# TODO
+# 
+# get time from videoserver if no internet access
