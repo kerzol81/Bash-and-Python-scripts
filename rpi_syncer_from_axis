@@ -23,7 +23,7 @@ usage() {
 	EOF
 }
 
-function external_hdd_checker(){
+function is_external_hdd(){
 	
 		ls $LOCAL_FOLDER >/dev/null
 		
@@ -42,7 +42,7 @@ function no_multiple_instance(){
 }
 
 
-function hdd_checker(){
+function hdd_capacity(){
 		
 		SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
 
@@ -74,9 +74,9 @@ function download_from_axis(){
 }
 
 main() {
-	external_hdd_checker
+	is_external_hdd
+	hdd_capacity
 	no_multiple_instance
-	hdd_checker
 	download_from_axis
 }
 
