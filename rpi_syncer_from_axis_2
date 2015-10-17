@@ -1,5 +1,6 @@
 #!/bin/bash
-# syncronising and arranging files from an AXIS server
+# syncronising and arranging files from an AXIS video server
+# inoke the script with cron
 
 AXIS_IP="192.168.1.10"
 AXIS_PORT='21'
@@ -12,6 +13,29 @@ TO_FOLDER="/mnt/recordings/arranged"
 MAX="99"
 EXTENSION="mkv"
 
+usage() {
+	readonly PROGNAME=`basename $0`
+
+	cat <<- EOF
+	usage of $PROGNAME script
+	
+	the script will exit if it has already been started
+	to make it run in every minute: 
+	
+	crontab -e and append this:
+	
+	*/1 * * * *  /path/to/script/$PROGNAME
+	EOF
+}
+
+function is_axis(){
+	ping -c 1 $AXIS_IP
+	if [ $? -ne 0 ];then
+		echo "The axis server is not available..."
+	exit 1
+fi
+	
+}
 
 function syncronising(){
 
@@ -46,8 +70,10 @@ function arranging(){
 
 
 
-while [ 1 ]; do
+function main(){
+	is_axis
 	syncronising
 	arranging
-	sleep 60
-done
+}
+
+main
