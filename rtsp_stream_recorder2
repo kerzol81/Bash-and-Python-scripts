@@ -73,7 +73,7 @@ function remove_chunks(){
 }
 
 
-funtion main(){	
+function main(){	
 
 	is_hdd_attached
 	cd $FOLDER
