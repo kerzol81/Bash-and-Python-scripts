@@ -10,7 +10,7 @@ function create_lockfile(){
 
 function check_lockfile(){
         if [ -f $LOCKFILE ]; then
-                echo "The lockfile is already there, exiting..."
+                echo "The lockfile has been created, exiting..."
                 exit 1
         fi
 }
