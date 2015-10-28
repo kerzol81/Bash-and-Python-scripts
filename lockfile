@@ -17,9 +17,8 @@ function check_lockfile(){
 
 
 function main(){
-
-      create_lockfile
-      check_lockfile
+        check_lockfile
+        create_lockfile
 }
 
 main
