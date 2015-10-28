@@ -5,7 +5,7 @@ function create_lockfile(){
         local PROGNAME=`basename $0`
         local LOCKFILE=/var/lock/lockfile.${PROGNAME}.$$
         echo "The lockfile's name : ${LOCKFILE}"
-        sleep 1
+        touch ${LOCKFILE}
 }
 
 function main(){
