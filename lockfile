@@ -5,12 +5,21 @@ function create_lockfile(){
         local PROGNAME=`basename $0`
         local LOCKFILE=/var/lock/lockfile.${PROGNAME}.$$
         echo "The lockfile's name : ${LOCKFILE}"
-        touch ${LOCKFILE}
+        touch $LOCKFILE
 }
 
-function main(){
-      create_lockfile
+function check_lockfile(){
+        if [ -f $LOCKFILE* ]; then
+                echo "The lockfile is already there, exiting..."
+                exit 1
+        fi
+}
 
+
+function main(){
+
+      create_lockfile
+      check_lockfile
 }
 
 main
