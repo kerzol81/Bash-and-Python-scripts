@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+#!/usr/bin/env python2.7
+
+'''
+  a renaming script in CURRENT directory
+  27.12.2014
+'''
+
+import os
+import sys
+
+title = "The script replaces STRINGS in filenames in CURRENT directory"
+print title
+print "-" * len(title) # 06.01.2015
+print "\n"
+print "\texample.: chesse01.jpg ---> apple01.jpg"
+print "\n"
+
+
+src = raw_input("String to replace in the filenames: ")
+
+
+if src == (''):
+	print ("You cannot use empty string")
+	src = raw_input("You must enter a <STRING> to replace in the filenames: ")
+	if src == (''):
+		print ("You didn't specify <STRING>, \nexit...")
+		sys.exit(1)
+
+if src == (sys.argv[0]) or src == ('py') or src == ('renamer'):
+	print ("That would be in the script's name:-)")
+	src = raw_input("You must enter another <STRING>")
+	if src == (''):
+		print ("You didn't specify <STRING>, \nexit...")
+		sys.exit(1)
+
+# the script exits if user tries to rename the extension
+
+files = os.listdir('.') # files in CURRENT directory
+extensions = []
+
+for i in files:
+		extension = i[-3:]
+		extensions.append(extension) # 06.01.2015
+
+
+if src in extensions:
+        print ("You shouldn't modify the extension!")
+        sys.exit(1)
+
+
+dst = raw_input("Enter new string\n(leave it empty if you want to delete from filenames): ")
+
+if dst == (sys.argv[0]) or src == ('py') or src == ('renamer'):
+	print ("That would be the script's name,:-)")
+	dst = raw_input("Enter another <STRING>") # BUG
+		
+if dst == (''):
+		print ("You'll DELETE from filenames")
+		print ("Are you sure?")
+		user_answer = raw_input("Y/N\n>>>")
+		valid_anwers = ['y', 'yes', 'Yes']
+		if user_answer in valid_anwers:
+			print ("Deleting from filenames...")
+		else:	
+			print ("Exiting...\nBye...")
+			sys.exit(1)
+
+print ("Is the renaming correct: <{0}> ---> <{1}> ?") .format(src,dst)
+
+user_answer = raw_input("Y/N\n>>>")
+valid_anwers = ['y', 'yes', 'Yes']
+if user_answer in valid_anwers:
+		print ("OK...")
+else:	
+		print ("Exiting...\nBye...")
+		sys.exit(1)
+
+
+for filename in os.listdir("."): 
+	os.rename(filename, filename.replace(src, dst))
+	
+print ("\nSuccessful renaming\nBye...")
+
+'''
+TO DO
+
+the extensions list should be filled by a function call - DONE - 06.01.2015
+fix BUG on line 53, if user enters 'py' again it lets him rename the py extension
+'''
