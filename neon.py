@@ -4,7 +4,7 @@ import time
 import os
 
 
-def	neon(s):
+def neon(s):
   x = 0
   while x <= len(s):
   os.system("clear")
