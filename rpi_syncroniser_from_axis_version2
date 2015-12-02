@@ -1,0 +1,115 @@
+#!/bin/bash
+# syncronising and arranging files from an AXIS video server
+# invoke the script with cron
+
+AXIS_IP='192.168.1.10'
+AXIS_PORT='21'
+USER='root'
+PASS='root'
+LOCAL_FOLDER='/mnt/recordings'
+AXIS_SD='/var/spool/storage/SD_DISK'
+TO_FOLDER='/mnt/recordings/arranged'
+MAX='98'			                                        # HDD max
+EXTENSION='mkv'
+SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`  # HDD space
+
+function usage() {
+	readonly PROGNAME=`basename $0`
+
+	cat <<- EOF
+	usage of $PROGNAME script
+	
+	the script will exit if it has already been started
+	to make it run in every minute: 
+	
+	crontab -e and append this:
+	
+	*/1 * * * *  /path/to/script/$PROGNAME
+	EOF
+}
+
+function no_multiple_instance(){
+
+		if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+			echo 'only one instance is allowed'
+			exit 1
+		fi
+}
+
+function is_external_hdd(){
+	
+		ls $LOCAL_FOLDER >/dev/null
+		
+		if [ $? -ne 0 ];then
+			echo 'there is no HDD attached'
+			exit 2
+		fi
+}
+
+function is_axis(){
+
+		ping -c 1 $AXIS_IP
+		if [ $? -ne 0 ];then
+			echo "The axis server is not available..."
+			exit 3
+		fi
+	
+}
+
+function syncronising(){
+		
+		wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
+
+		if [ $? -ne 0 ];then
+			echo 'could not download from server'
+			exit 4
+		fi
+
+}
+
+function delete_oldest_folder(){
+  	cd $LOCAL_FOLDER
+  	if [ "$SPACE" -ge "$MAX" ];then
+  		rm -rf `ls -t | tail -n 1`
+  	fi
+}
+	
+
+function hdd_full(){
+		
+		if [ "$SPACE" -ge "99" ];then
+			exit 6
+		fi
+}
+
+
+
+function arranging(){
+
+	mkdir -p $TO_FOLDER
+	cd $TO_FOLDER
+
+	for i in `find $LOCAL_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
+		do 
+			if [ ! -d $i ]; then
+				mkdir -p $i
+				mv -u `find $LOCAL_FOLDER -name $i*.mkv` $i
+			else
+				mv -u `find $LOCAL_FOLDER -name $i*.mkv` $i
+			fi
+
+		done
+}
+
+
+function main(){
+	no_multiple_instance
+	is_external_hdd
+	is_axis
+	syncronising
+	arranging
+	#hdd_full
+	#delete_oldest_folder
+}
+
+main
