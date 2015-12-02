@@ -1,0 +1,21 @@
+function usage() {
+	readonly PROGNAME=`basename $0`
+
+	cat <<- EOF
+	usage of $PROGNAME script
+	
+	these must be on the same line:
+	
+	Lorem ipsum dolor sit amet, his ea prompta ceteros fierent. 
+	Nihil fuisset nec id, et cum mutat accusam. 
+	Eum no percipitur theophrastus, pri no enim regione forensibus, nibh posse epicuri vim te. 
+	At persius admodum democritum mei. No has ipsum malorum detraxit, id has primis inciderint, ad mundi petentium est. 
+	Scaevola conceptam at est, ei vim fugit ubique qualisque, cum nostrum repudiare et.
+	
+	EOF
+}
+
+
+if [ "$1" == "-h" ] || [ "$1" == "--help" ]; then
+	usage
+fi
