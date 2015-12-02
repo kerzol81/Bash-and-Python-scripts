@@ -1,6 +1,6 @@
 #!/bin/bash
 # syncronising and arranging files from an AXIS video server
-# inoke the script with cron
+# invoke the script with cron
 
 AXIS_IP='192.168.1.10'
 AXIS_PORT='21'
