@@ -13,7 +13,7 @@ TO_FOLDER='/mnt/recordings/arranged'
 MAX='99'					# HDD max
 EXTENSION='mkv'
 
-usage() {
+function usage() {
 	readonly PROGNAME=`basename $0`
 
 	cat <<- EOF
@@ -67,7 +67,19 @@ function arranging(){
 
 		done
 }
+#!/bin/bash
 
+
+AXIS_IP='192.168.1.10'
+AXIS_PORT='21'
+USER='root'
+PASS='root'
+LOCAL_FOLDER='/mnt/recordings'
+AXIS_SD='/var/spool/storage/SD_DISK'
+FROM_FOLDER='/mnt/recordings'
+TO_FOLDER='/mnt/recordings/arranged'
+MAX='99'					# HDD max
+EXTENSION='mkv'
 
 
 function main(){
