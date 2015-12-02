@@ -50,7 +50,7 @@ function is_axis(){
 
 		ping -c 1 $AXIS_IP
 		if [ $? -ne 0 ];then
-			echo "The axis server is not available..."
+			echo "axis server is not available..."
 			exit 3
 		fi
 	
