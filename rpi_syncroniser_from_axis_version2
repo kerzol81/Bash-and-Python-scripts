@@ -38,7 +38,9 @@ function no_multiple_instance(){
 function is_external_hdd(){
 	ls $LOCAL_FOLDER >/dev/null
 	if [ $? -ne 0 ];then
-		echo 'there is no HDD attached'
+		RED='\033[1;31m'
+		NC='\033[0m'
+		printf "${RED}there is no HDD attached${NC}"
 		exit 2
 	fi
 }
@@ -46,7 +48,9 @@ function is_external_hdd(){
 function is_axis(){
 	ping -c 1 $AXIS_IP
 	if [ $? -ne 0 ];then
-		echo "axis server is not available..."
+		RED='\033[1;31m'
+		NC='\033[0m'
+		printf "${RED}axis server is not available${NC}"
 		exit 3
 	fi
 }
@@ -54,12 +58,22 @@ function is_axis(){
 function syncronising(){
 	wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
 	if [ $? -ne 0 ];then
-		echo 'could not download from server'
+		RED='\033[1;31m'
+		NC='\033[0m'
+		printf "${RED}could not download from server${NC}"
 		exit 4
 	fi
 }
 
 function delete_oldest_folder(){
+  	RED='\033[1;31m'
+	NC='\033[0m'
+  	integer='^[0-9]+$'
+	if ! [[ $SPACE =~ $integer ]] ; then
+   		printf "${RED}error:${NC} something went wrong while figuring out disk space" >&2
+   		exit 1
+	fi
+  	
   	cd $LOCAL_FOLDER
   	if [ "$SPACE" -ge "$MAX" ];then
 		rm -rf `ls -t | tail -n 1`
@@ -68,6 +82,14 @@ function delete_oldest_folder(){
 	
 
 function hdd_full(){
+  	RED='\033[1;31m'
+	NC='\033[0m'
+  	integer='^[0-9]+$'
+	if ! [[ $SPACE =~ $integer ]] ; then
+   		printf "${RED}error:${NC} something went wrong while figuring out disk space" >&2
+   		exit 1
+	fi
+	
 	if [ "$SPACE" -ge "99" ];then
 		exit 6
 	fi
