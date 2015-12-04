@@ -53,6 +53,8 @@ function is_axis(){
 }
 
 function syncronising(){
+	mkdir -p $LOCAL_FOLDER
+	cd $LOCAL_FOLDER
 	wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
 	if [ $? -ne 0 ];then
 		printf "${RED}[-] could not download from server\n${NC}"
