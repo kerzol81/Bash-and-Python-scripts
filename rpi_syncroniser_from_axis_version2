@@ -9,9 +9,10 @@ PASS='root'
 LOCAL_FOLDER='/mnt/recordings'
 AXIS_SD='/var/spool/storage/SD_DISK'
 TO_FOLDER='/mnt/recordings/arranged'
-MAX='98'			                                        # HDD max
 EXTENSION='mkv'
 SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`  # HDD space
+RED='\033[1;31m'
+NC='\033[0m'	#no color
 
 function usage() {
 	readonly PROGNAME=`basename $0`
@@ -30,8 +31,6 @@ function usage() {
 
 function no_multiple_instance(){
 	if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
-		RED='\033[1;31m'
-		NC='\033[0m'
 		printf "${RED}[-] only one instance is allowed\n${NC}"
 		exit 1
 	fi
@@ -40,8 +39,6 @@ function no_multiple_instance(){
 function is_external_hdd(){
 	ls $LOCAL_FOLDER >/dev/null
 	if [ $? -ne 0 ];then
-		RED='\033[1;31m'
-		NC='\033[0m'
 		printf "${RED}[-] there is no HDD attached\n${NC}"
 		exit 2
 	fi
@@ -50,8 +47,6 @@ function is_external_hdd(){
 function is_axis(){
 	ping -c 1 $AXIS_IP
 	if [ $? -ne 0 ];then
-		RED='\033[1;31m'
-		NC='\033[0m'
 		printf "${RED}[-] the axis server is not available\n${NC}"
 		exit 3
 	fi
@@ -60,16 +55,12 @@ function is_axis(){
 function syncronising(){
 	wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
 	if [ $? -ne 0 ];then
-		RED='\033[1;31m'
-		NC='\033[0m'
 		printf "${RED}[-] could not download from server\n${NC}"
 		exit 4
 	fi
 }
 
 function delete_oldest_folder(){
-  	RED='\033[1;31m'
-	NC='\033[0m'
   	integer='^[0-9]+$'
 	if ! [[ $SPACE =~ $integer ]] ; then
    		printf "${RED}[-] something went wrong while figuring out disk space\n${NC}"
@@ -77,15 +68,13 @@ function delete_oldest_folder(){
 	fi
   	
   	cd $LOCAL_FOLDER
-  	if [ "$SPACE" -ge "$MAX" ];then
+  	if [ "$SPACE" -ge "98" ];then
 		rm -rf `ls -t | tail -n 1`
   	fi
 }
 	
 
 function hdd_full(){
-  	RED='\033[1;31m'
-	NC='\033[0m'
   	integer='^[0-9]+$'
 	if ! [[ $SPACE =~ $integer ]] ; then
    		printf "${RED}[-] something went wrong while figuring out disk space\n${NC}"
@@ -117,11 +106,11 @@ function arranging(){
 function main(){
 	no_multiple_instance
 	is_external_hdd
+	hdd_full
+	delete_oldest_folder
 	is_axis
 	syncronising
 	arranging
-	#hdd_full
-	#delete_oldest_folder
 }
 
 main
