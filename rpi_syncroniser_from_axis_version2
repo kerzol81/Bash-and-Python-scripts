@@ -30,7 +30,9 @@ function usage() {
 
 function no_multiple_instance(){
 	if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
-		echo 'only one instance is allowed'
+		RED='\033[1;31m'
+		NC='\033[0m'
+		printf "${RED}[-] only one instance is allowed\n${NC}"
 		exit 1
 	fi
 }
@@ -40,7 +42,7 @@ function is_external_hdd(){
 	if [ $? -ne 0 ];then
 		RED='\033[1;31m'
 		NC='\033[0m'
-		printf "${RED}there is no HDD attached${NC}"
+		printf "${RED}[-] there is no HDD attached\n${NC}"
 		exit 2
 	fi
 }
@@ -50,7 +52,7 @@ function is_axis(){
 	if [ $? -ne 0 ];then
 		RED='\033[1;31m'
 		NC='\033[0m'
-		printf "${RED}axis server is not available${NC}"
+		printf "${RED}[-] the axis server is not available\n${NC}"
 		exit 3
 	fi
 }
@@ -60,7 +62,7 @@ function syncronising(){
 	if [ $? -ne 0 ];then
 		RED='\033[1;31m'
 		NC='\033[0m'
-		printf "${RED}could not download from server${NC}"
+		printf "${RED}[-] could not download from server\n${NC}"
 		exit 4
 	fi
 }
@@ -70,7 +72,7 @@ function delete_oldest_folder(){
 	NC='\033[0m'
   	integer='^[0-9]+$'
 	if ! [[ $SPACE =~ $integer ]] ; then
-   		printf "${RED}error:${NC} something went wrong while figuring out disk space" >&2
+   		printf "${RED}[-] something went wrong while figuring out disk space\n${NC}"
    		exit 1
 	fi
   	
@@ -86,7 +88,7 @@ function hdd_full(){
 	NC='\033[0m'
   	integer='^[0-9]+$'
 	if ! [[ $SPACE =~ $integer ]] ; then
-   		printf "${RED}error:${NC} something went wrong while figuring out disk space" >&2
+   		printf "${RED}[-] something went wrong while figuring out disk space\n${NC}"
    		exit 1
 	fi
 	
