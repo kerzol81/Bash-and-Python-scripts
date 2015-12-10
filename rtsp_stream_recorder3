@@ -1,0 +1,16 @@
+class videoserver:
+	vendor = ''
+	ip = ''
+	port = 554
+	username = ''
+	password = ''
+	
+	def get_rtsp_stream(self):
+		if self.vendor == 'vivotek':
+			return 'rtsp://%s:%s@%s:%d/live2.sdp' % (self.username, self.password, self.ip, self.port)
+
+		elif self.vendor == 'axis':
+			return 'rtsp://%s:%s@%s/axis-media/media.amp' % (self.username, self.password, self.ip)
+		
+		else:
+			print 'no vendor specified'
