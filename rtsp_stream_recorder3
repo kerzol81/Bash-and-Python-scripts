@@ -24,7 +24,8 @@ class videoserver:
 			print 'no vendor specified'
 			
 	def record(self):
-		os.system('vlc %s -I dummy --run-time %s --play-and-exit --sout %s/`date +%%Y-%%m-%%d__%s`/`date +%%Y-%%m-%%d__%%H_%%M`.mp4' % (self.get_rtsp_stream(),self.recording_seconds,self.recording_folder,self.ip))
+		os.system('echo record')
+		#os.system('vlc %s -I dummy --run-time %s --play-and-exit --sout %s/`date +%%Y-%%m-%%d__%s`/`date +%%Y-%%m-%%d__%%H_%%M`.mp4' % (self.get_rtsp_stream(),self.recording_seconds,self.recording_folder,self.ip))
 
 	def stop(self):
 		os.system('echo stop')
