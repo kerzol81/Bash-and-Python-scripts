@@ -1,3 +1,6 @@
+#!/usr/bin/python
+
+
 class videoserver:
 	vendor = ''
 	ip = ''
