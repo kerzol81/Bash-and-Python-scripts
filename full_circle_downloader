@@ -1,0 +1,21 @@
+#!/bin/bash
+
+from=0
+to=0
+
+
+echo '[-] Full Circle Magazine downloader script'
+echo ''
+echo '[-] enter issue FROM:'
+read from
+echo '[-] enter issue TO:'
+read to
+
+for i in `seq $from $to`
+
+	do
+	echo "[-] debug: DOWNLOADLING : $i "
+	wget http://dl.fullcirclemagazine.org/issue$[i]_en.pdf
+	done
+	
+exit 0
