@@ -9,3 +9,5 @@ iptables -A INPUT -i lo -j ACCEPT
 iptables -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
 
 iptables-save > /etc/iptables/rules.v4
+
+iptables-apply /etc/iptables/rules.v4
