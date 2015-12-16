@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding:utf-8 -*-
 
 import os
 
-class FilesToRename:
+class FilesToRename():
 	
 	def show_files(self):
 		print "Files in current folder:\n"
@@ -17,7 +17,7 @@ class FilesToRename:
 	def rename(self):
 		print "\n"
 		src = raw_input("Enter the string to rename: ")
-		dst = raw_input("Enter new string to rename: ")
+		dst = raw_input("Enter new string: ")
 		print "\nStrings to replaced: %s ---> %s"% (src, dst)
 		
 		raw_input("Press Enter to continue..., CTRL + C to exit\n> ")
