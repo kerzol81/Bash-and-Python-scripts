@@ -19,9 +19,7 @@ class FilesToRename():
 		src = raw_input("Enter the string to rename: ")
 		dst = raw_input("Enter new string: ")
 		print "\nStrings to replaced: %s ---> %s"% (src, dst)
-		
 		raw_input("Press Enter to continue..., CTRL + C to exit\n> ")
-		
 		for filename in os.listdir("."): 
 				os.rename(filename, filename.replace(src, dst))
 
