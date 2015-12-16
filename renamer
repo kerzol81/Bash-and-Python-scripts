@@ -3,6 +3,11 @@
 
 """
 Mass renamer script that renames arbitrary strings in filenames
+Usage:
+	as root: touch /usr/bin/renamer
+	copy the script to that file,
+	give it permissions for instance chmod700 /usr/bin/renamer
+	than you can invoke it from any folder you are actually working in
 """
 
 import os
