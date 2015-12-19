@@ -3,35 +3,18 @@
 import os
 import sys
 
+class Vivotek():
+    ip = ''
+    username = ''
+    password = ''
+    stream = '2'
+    port = '554'
 
-class Videoserver:
-	vendor = ''
-	ip = ''
-	port = 554
-	username = ''
-	password = ''
-	
-	def get_rtsp_stream(self):
-		if self.vendor == 'vivotek':
-			self.username = 'root'
-			return 'rtsp://%s:%s@%s:%d/live2.sdp' % (self.username, self.password, self.ip, self.port)
+    def url(self):
+        return ('rtsp://%s:%s@%s:%s/live%s.sdp') % (self.username,self.password,self.ip,self.port,self.stream)
 
-		elif self.vendor == 'axis':
-			self.username = 'admin'
-			return 'rtsp://%s:%s@%s/axis-media/media.amp' % (self.username, self.password, self.ip)
-		
-		else:
-			print 'no vendor specified'
-			
-	def record(self):
-		try:
-			os.system('echo record')
-			#os.system('vlc %s -I dummy --run-time %s --play-and-exit --sout %s/`date +%%Y-%%m-%%d__%s`/`date +%%Y-%%m-%%d__%%H_%%M`.mp4' % (self.get_rtsp_stream(),self.recording_seconds,self.recording_folder,self.ip))
-		except:
-			pass
-	def stop(self):
-		os.system('echo stop')
-		
+
+
 """
 To Do: check out live555 
 """
