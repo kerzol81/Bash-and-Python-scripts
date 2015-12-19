@@ -8,7 +8,7 @@ class Vivotek():
     port = '554'
 
     def url(self):
-        return ('rtsp://%s:%s@%s:%s/live%s.sdp') % (self.username,self.password,self.ip,self.port,self.stream)
+        return ('rtsp://%s:%s@%s:%s/live%s.sdp') % (self.username, self.password, self.ip, self.port, self.stream)
         
 class Axis():
     ip = '192.168.1.90'
