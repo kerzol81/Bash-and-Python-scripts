@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-import os
-import sys
-
 class Vivotek():
     ip = ''
     username = ''
@@ -12,6 +9,9 @@ class Vivotek():
 
     def url(self):
         return ('rtsp://%s:%s@%s:%s/live%s.sdp') % (self.username,self.password,self.ip,self.port,self.stream)
+        
+class Axis():
+    pass
 
 
 
