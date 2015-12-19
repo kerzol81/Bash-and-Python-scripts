@@ -31,3 +31,7 @@ class Videoserver:
 			pass
 	def stop(self):
 		os.system('echo stop')
+		
+"""
+To Do: check out live555 
+"""
