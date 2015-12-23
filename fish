@@ -48,6 +48,9 @@ def prohibition():
 
     elif fish is 16:
         print s, '---'
+        
+    else:
+        print 'invalid input'
 
     raw_input("Press Enter for a new search, Ctrl - C for exit")
 
