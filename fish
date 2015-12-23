@@ -50,9 +50,9 @@ def prohibition():
         print s, '---'
         
     else:
-        print 'invalid input'
+        print '\n[-]invalid input'
 
-    raw_input("Press Enter for a new search, Ctrl - C for exit")
+    raw_input("\n[-]Press Enter for a new search, Ctrl - C for exit\n")
 
 def main():
     while True:
