@@ -27,6 +27,7 @@ def ConnectSocket():
 
     try:
         s.connect((RHOST, RPORT))
+    
     except:
         print('[-] Error while connecting')
 
