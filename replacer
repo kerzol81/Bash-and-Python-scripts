@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-replaces hyphenated characters in filenames
+replaces hyphenated and odd characters in file or foldernames
 '''
 
 import os
@@ -16,7 +16,6 @@ chars = {
     'ü': 'u',
     'ű': 'u',
 
-
     'Á': 'A',
     'É': 'E',
     'Í': 'I',
@@ -30,6 +29,8 @@ chars = {
     ' ': '.',
     '-': '_',
     ':': '.',
+    '::': '_',
+    '..': '.',
 }
 
 for src, dst in chars.items():
