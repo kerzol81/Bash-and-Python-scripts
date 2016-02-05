@@ -36,5 +36,6 @@ chars = {
 for src, dst in chars.items():
     for filename in os.listdir("."):
         if filename[0] == ' ' or filename[:1] == ' ':
-            break
+            dst = ''
         os.rename(filename, filename.replace(src, dst))
+
