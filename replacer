@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+'''
+replaces hyphenated characters in filenames
+'''
+
+import os
+
+chars = {
+    'á': 'a',
+    'é': 'e',
+    'í': 'i',
+    'ó': 'o',
+    'ö': 'o',
+    'ő': 'o',
+    'ú': 'u',
+    'ü': 'u',
+    'ű': 'u',
+
+
+    'Á': 'A',
+    'É': 'E',
+    'Í': 'I',
+    'Ó': 'O',
+    'Ö': 'O',
+    'Ő': 'O',
+    'Ú': 'U',
+    'Ü': 'U',
+    'Ű': 'U',
+
+    ' ': '.',
+    '-': '_',
+    ':': '.',
+}
+
+for src, dst in chars.items():
+    for filename in os.listdir("."):
+        if filename[0] == ' ' or filename[:1] == ' ':
+            break
+        os.rename(filename, filename.replace(src, dst))
