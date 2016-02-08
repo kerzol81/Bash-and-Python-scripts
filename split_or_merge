@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# splits or merges mp4 files in case the is an upload limit
+# install lxsplit
+
+function split(){
+
+	for j in `ls -F | grep /`; do
+		cd $j
+			for i in `ls *.mp4`; do 
+			lxsplit -s $i 100M;		
+			done	
+		rm `ls *.mp4`;
+		cd ..
+	done
+}
+
+
+function merge(){
+
+	for k in `ls -F | grep /`; do
+		cd $k
+			for l in `ls *001`; do
+			lxsplit -j $l;
+			
+			done
+		rm -rf `ls *.mp4.*`;
+		cd ..
+	done
+}
+
