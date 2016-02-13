@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# run it simultaneously with photorec in case you don't have much space
+
+target='/path/to/recovered/files/'
+user='username'
+
+cd $target
+
+mkdir -p mp4 avi mkv wmv jpg pdf
+
+while true; 
+
+do 
+
+	for a in `find . -name *.mp4`; do mv $a ${target}/mp4; done;
+	
+	for b in `find . -name *.avi`; do mv $b ${target}/avi; done;
+	
+	for c in `find . -name *.mkv`; do mv $c ${target}/mkv; done;
+	
+	for d in `find . -name *.wmv`; do mv $d ${target}/wmv; done;
+	
+	for e in `find . -name *.jpg`; do mv $e ${target}/jpg; done;
+
+	for f in `find . -name *.pdf`; do mv $f ${target}/pdf; done;
+	
+	echo 'removing recup dirs...'
+	
+	chown $user:$user ${target} -R
+	cd $target
+	rm -rf `ls -tr | grep recup_dir | head -1`
+
+	sleep 5
+
+done
