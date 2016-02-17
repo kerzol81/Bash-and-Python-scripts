@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Prior to running a passwordless ssh key must be generated and uploaded to the server
+# then run it by cron as you wish
+
+folder='/source/of/downloaded/torrents/' 
+server='root@ip:/path/to/torrents/'
+
+function query_new_torrents(){
+	ls ${folder}*.torrent 2>/dev/null
+
+	if [ $? -ne 0 ];
+	then
+		#echo 'no new torrent files'
+		exit 1
+	fi
+}
+
+function move_torrents_to_server(){
+	for i in `ls ${folder}*.torrent`
+		do 
+		
+			scp -i ~/.ssh/id_rsa $i $server;
+			sleep 3
+			rm -rf ${folder}*torrent 
+		
+		done
+}
+
+function main(){
+		query_new_torrents
+		move_torrents_to_server
+}
+
+main
+
+exit 0
