@@ -5,6 +5,7 @@
 
 folder='/source/of/downloaded/torrents/' 
 server='root@ip:/path/to/torrents/'
+host='ip'
 
 function query_new_torrents(){
 	ls ${folder}*.torrent 2>/dev/null
@@ -17,6 +18,14 @@ function query_new_torrents(){
 }
 
 function move_torrents_to_server(){
+	ping c-1 $host 2>/dev/null
+	
+	if [ $? -ne 0 ];
+	then
+		# echo 'no host'
+		exit 2
+	fi
+	
 	for i in `ls ${folder}*.torrent`
 		do 
 		
