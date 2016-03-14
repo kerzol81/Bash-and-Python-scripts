@@ -18,7 +18,7 @@ function query_new_torrents(){
 }
 
 function move_torrents_to_server(){
-	ping c-1 $host 2>/dev/null
+	ping c-1 $host 1>/dev/null 2>&1
 	
 	if [ $? -ne 0 ];
 	then
