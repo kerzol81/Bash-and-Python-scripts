@@ -9,20 +9,16 @@ server_path='root@10.0.0.4:/home/deluge/torrents/'
 
 cd "$local_path"
 
-if [ "$torrents" -eq 0 ];
-then
+if [ "$torrents" -eq 0 ]; then
 	exit 1
 fi
 
-
-for i in *.torrent
-	do 
-		scp -i ~/.ssh/id_rsa "$i" "$server_path";	
-		if [ $? -ne 0 ];
-			then
-			exit 2
-		fi
-	done
+for i in *.torrent; do 
+	scp -i ~/.ssh/id_rsa "$i" "$server_path";	
+	if [ $? -ne 0 ];then
+		exit 2
+	fi
+done
 
 find "$local_path" -type f -name '*torrent' -exec rm -f {} \;
 
