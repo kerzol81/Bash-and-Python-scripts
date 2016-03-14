@@ -1,7 +1,12 @@
 #!/bin/bash
 
-# Prior to running a passwordless ssh key must be generated and uploaded to the server
-# then run it by cron in every minute
+# upload2deluge - the scipt checks for torrents in the download folder, and transfers them to a dedicated torrent server
+#
+# 12.03.2016. kerzol81
+#
+# Prior to running a passwordless ssh key must be generated and uploaded to the torrent server
+# run it in every minute with cron:
+# * * * * * /usr/bin/upload2deluge
 
 local_path='/home/zoli/downloads/'
 torrents=`find "$local_path" -type f -name '*torrent' | wc -l`
@@ -23,4 +28,3 @@ done
 find "$local_path" -type f -name '*torrent' -exec rm -f {} \;
 
 exit 0
-
