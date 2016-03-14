@@ -6,7 +6,6 @@
 local_path='/home/zoli/downloads/'
 torrents=`find . -type f -name '*torrent' | wc -l`
 server_path='root@10.0.0.4:/home/deluge/torrents/'
-server='10.0.0.4'
 
 cd "$local_path"
 
