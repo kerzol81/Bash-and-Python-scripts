@@ -44,3 +44,5 @@ function main(){
 main
 
 exit 0
+
+# bug: it doesn't work with whitespaces in torrent file names.
