@@ -7,6 +7,10 @@ folder='/source/of/downloaded/torrents/'
 server='root@ip:/path/to/torrents/'
 host='ip'
 
+# workaround for whitespaces in filenames
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+
 function query_new_torrents(){
 	ls ${folder}*.torrent 2>/dev/null
 
@@ -42,6 +46,8 @@ function main(){
 }
 
 main
+
+IFS=$SAVEIFS
 
 exit 0
 
