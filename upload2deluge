@@ -3,8 +3,6 @@
 # Prior to running a passwordless ssh key must be generated and uploaded to the server
 # then run it by cron as you wish
 
-#!/bin/bash
-
 folder='/home/zoli/downloads/' 
 server='root@10.0.0.4:/home/deluge/torrents/'
 host='10.0.0.4'
