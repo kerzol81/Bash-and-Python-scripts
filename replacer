@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 '''
 replaces hyphenated and odd characters in file or foldernames
@@ -31,6 +32,8 @@ chars = {
     ':': '.',
     '::': '_',
     '..': '.',
+    '._.':'-',
+    '._':'_',
 }
 
 for src, dst in chars.items():
@@ -38,4 +41,5 @@ for src, dst in chars.items():
         if filename[0] == ' ' or filename[:1] == ' ':
             dst = ''
         os.rename(filename, filename.replace(src, dst))
+
 
