@@ -15,7 +15,7 @@ DEVICE='sda'				# external HDD on Raspberry Pi
 
 function is_hdd_attached(){
 
-	mkdir -p $FOLDER
+	mkdir -p "$FOLDER"
 	if [ $? -ne 0 ];then
 		echo "no hdd attached"
 		exit 1
