@@ -40,18 +40,18 @@ function get_stream_according_to_vendor(){
 
 function remove_oldest_files_97(){
 	
-	local SPACE=`df -h | tr -d "%" | awk '/sda/ { print $5 }'`
+	local SPACE=$(df -h | tr -d "%" | awk '/sda/ { print $5 }')
 	local MAX=97
 
 	if [ "$SPACE" -ge "$MAX" ];then
-		rm -rf `ls -lt | grep '^d' | tail -n 1 | awk '{print $NF}'`
+		rm -rf $(ls -lt | grep '^d' | tail -n 1 | awk '{print $NF}')
 	fi
 }
 
 		
 function exit_if_hdd_reaches_98(){		
 	# if the mounted hdd space is over 98% the script exits
-	local SPACE=`df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }'`
+	local SPACE=$(df -h | tr -d "%" | grep $DEVICE | awk '{ print $5 }')
 	local MAX=98
 		
 	if [ "$SPACE" -ge "$MAX" ];then
@@ -62,8 +62,8 @@ function exit_if_hdd_reaches_98(){
 
 function record(){
 	# thanks for Poke :-)	
-	mkdir -p $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`
-	vlc $STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/`date +%Y-%m-%d__$VIDEOSERVER`/`date +%Y-%m-%d__%H_%M`.mp4
+	mkdir -p $FOLDER/$(date +%Y-%m-%d__$VIDEOSERVER)
+	vlc $STREAM -I dummy --run-time $SPLIT --play-and-exit --sout $FOLDER/$(date +%Y-%m-%d__$VIDEOSERVER)/$(date +%Y-%m-%d__%H_%M).mp4
 }
 
 	
@@ -76,16 +76,12 @@ function remove_chunks(){
 function main(){	
 
 	is_hdd_attached
-	cd $FOLDER
+	cd $FOLDER || exit 4
 	get_stream_according_to_vendor
 	remove_oldest_files_97
 	exit_if_hdd_reaches_98
 	record
-	remove_chunks
+	#remove_chunks
 }
 
 main
-
-# TODO
-# 
-# get time from videoserver if there is no ntp server
