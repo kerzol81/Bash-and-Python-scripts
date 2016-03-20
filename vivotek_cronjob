@@ -16,7 +16,7 @@ createCronJob(){
 	cd /tmp/ || exit 1
 	rm /tmp/*.vivotek 2>/dev/null
 	touch "$IP".vivotek
-	CRONJOB="*/5 * * * * /usr/bin/vrecord $IP $USERNAME $PASSWORD $STREAM" >> "$IP".vivotek
+	CRONJOB="*/5 * * * * /usr/bin/vrecord $IP $USERNAME $PASSWORD $STREAM"
 	{
 		echo "# m h  dom  dow  command"
 		echo "# "
