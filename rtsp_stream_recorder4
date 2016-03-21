@@ -25,7 +25,6 @@ function argument_check(){
 
 
 function hdd_check(){
-
 	mkdir -p "$FOLDER"
 	if [ "$?" -ne 0 ];then
 		echo "no hdd attached"
@@ -35,7 +34,6 @@ function hdd_check(){
 
 
 function hdd_full(){		
-	
 	# if the mounted hdd space is over 98% the script exits
 	local SPACE=$(df -h | tr -d "%" | grep "$DEVICE" | awk '{ print $5 }')
 	local MAX=98
@@ -62,5 +60,3 @@ function main(){
 }
 
 main
-
-
