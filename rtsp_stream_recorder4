@@ -14,6 +14,19 @@ FOLDER='/mnt/recordings'
 DEVICE='sda'		            # external HDD on Raspberry Pi usually sda
 
 
+function argument_check(){
+	if [ $# -eq 0 ]
+	  then
+		echo "RTSP stream recording script from VIVOTEK VS8102 videoservers"
+		echo "to add a cron job: crontab -e"
+		echo ""
+		echo "*/5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>"
+	fi
+}
+
+
+
+
 function hdd_check(){
 
 	mkdir -p "$FOLDER"
@@ -43,7 +56,7 @@ function record(){
 
 
 function main(){	
-
+	argument_check
 	hdd_check
 	cd $FOLDER || exit 4
     	hdd_full
