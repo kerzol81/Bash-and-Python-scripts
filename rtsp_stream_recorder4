@@ -4,15 +4,14 @@
 # run it with cron:
 # */5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>
 
-VIDEOSERVER=$1              # IP address
+VIDEOSERVER=$1                              # IP address
 USERNAME=$2
 PASSWORD=$3
 STREAM=$4
 SPLIT='300'			            # 300 = 5 min, make sure you set it according to the cron job
 STREAM="rtsp://$USERNAME:$PASSWORD@$VIDEOSERVER:554/live$STREAM.sdp"
 FOLDER='/mnt/recordings'
-DEVICE='sda'		            # external HDD on Raspberry Pi usually sda
-
+DEVICE='sda'		            	    # external HDD on Raspberry Pi usually sda
 
 function argument_check(){
 	if [ $# -eq 0 ]
@@ -23,8 +22,6 @@ function argument_check(){
 		echo "*/5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>"
 	fi
 }
-
-
 
 
 function hdd_check(){
