@@ -2,7 +2,7 @@
 
 # RTSP stream recording from AXIS or VIVOTEK videoservers
 # run it with cron:
-# */5 * * * * /path/to/script
+# */5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>
 
 VIDEOSERVER=$1              # IP address
 USERNAME=$2
