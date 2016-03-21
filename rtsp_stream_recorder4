@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# RTSP stream recording from AXIS or VIVOTEK videoservers
+# RTSP stream recording from VIVOTEK videoservers
 # run it with cron:
 # */5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>
 
