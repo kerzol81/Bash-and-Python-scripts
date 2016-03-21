@@ -27,7 +27,7 @@ function hdd_check(){
 function hdd_full(){		
 	
 	# if the mounted hdd space is over 98% the script exits
-	local SPACE=`df -h | tr -d "%" | grep "$DEVICE" | awk '{ print $5 }'`
+	local SPACE=$(df -h | tr -d "%" | grep "$DEVICE" | awk '{ print $5 }')
 	local MAX=98
 		
 	if [ "$SPACE" -ge "$MAX" ];then
@@ -37,8 +37,8 @@ function hdd_full(){
 
 
 function record(){	
-	mkdir -p "$FOLDER"/`date +%Y-%m-%d__$VIDEOSERVER`
-	vlc "$STREAM" -I dummy --run-time "$SPLIT" --play-and-exit --sout "$FOLDER"/`date +%Y-%m-%d__$VIDEOSERVER`/`date +%Y-%m-%d__%H_%M`.mp4
+	mkdir -p "$FOLDER"/$(date +%Y-%m-%d__$VIDEOSERVER)
+	vlc "$STREAM" -I dummy --run-time "$SPLIT" --play-and-exit --sout "$FOLDER"/$(date +%Y-%m-%d__$VIDEOSERVER)/$(date +%Y-%m-%d__%H_%M).mp4
 }
 
 
@@ -46,10 +46,11 @@ function main(){
 
 	hdd_check
 	cd $FOLDER || exit 4
-  hdd_full
+    	hdd_full
 	record
 	
 }
 
 main
+
 
