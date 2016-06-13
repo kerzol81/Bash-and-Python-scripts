@@ -1,0 +1,14 @@
+#!/bin/bash
+
+DST="1.2.3.4"
+PORT="80"
+
+# on client: vlc http://1.2.3.4:80
+
+#while true; do
+    
+    vlc -I dummy -vvv input_stream --sout '#standard{access=http,mux=ogg,dst=s"$DST":"$PORT"}
+    
+#done
+
+    
