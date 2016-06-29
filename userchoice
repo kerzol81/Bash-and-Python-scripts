@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# User choice
+
+echo "Choose between 1, 2 or 3!"
+
+
+read userinput
+
+if [ $userinput -eq 1 ] ;then
+		message='1...'
+	
+elif [ $userinput -eq 2 ];then
+		message='2...'
+
+elif [ $userinput -eq 3 ];then
+		message='3...'
+
+else
+	echo 'wrong choice'
+fi
+
+echo $message
