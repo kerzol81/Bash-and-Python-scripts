@@ -23,6 +23,7 @@ for i in *.torrent; do
 	if [ $? -ne 0 ];then
 		exit 3
 	fi
+	echo "`date +%Y-%m-%d_@_%H:%M` $i" >> /var/log/upload2deluge.log
 done
 
 find "$local_path" -type f -name '*torrent' -exec rm -f {} \;
