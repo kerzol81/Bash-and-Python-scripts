@@ -1,0 +1,25 @@
+import os
+from shutil import copyfile
+
+# 
+
+file_qnap = r'C:\Users\Zed\Desktop\a.txt'
+file_pendrive = os.path.abspath("b.txt")
+
+#
+if os.path.getmtime(file_qnap) > os.path.getmtime(file_pendrive):
+    new = file_qnap
+else:
+    new = file_pendrive
+
+if os.path.getmtime(file_qnap) < os.path.getmtime(file_pendrive):
+    old = file_qnap
+else:
+    old = file_pendrive
+
+#
+try:
+    copyfile(new, old)
+
+except Exception:
+    pass
