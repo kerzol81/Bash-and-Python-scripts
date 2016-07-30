@@ -6,6 +6,8 @@ from shutil import copyfile
 file_qnap = r'C:\Users\Zed\Desktop\a.txt'
 file_pendrive = os.path.abspath("b.txt")
 
+# doesn't work with xlsx files
+
 #
 if os.path.getmtime(file_qnap) > os.path.getmtime(file_pendrive):
     new = file_qnap
