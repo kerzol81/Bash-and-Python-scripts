@@ -3,8 +3,8 @@ from shutil import copyfile
 
 # 
 
-file_qnap = r'C:\Users\Zed\Desktop\a.txt'
-file_pendrive = os.path.abspath("b.txt")
+file_qnap = r'C:\Users\Zed\Desktop\a.xlsx'
+file_pendrive = os.path.abspath("b.xlsx")
 
 # doesn't work with xlsx files
 
