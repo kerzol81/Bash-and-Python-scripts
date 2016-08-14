@@ -1,8 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-'''
+"""
 replaces hyphenated and odd characters in file or foldernames
-'''
+
+Usage:
+	as root: touch /usr/bin/replacer
+	copy this script to that file, give it permissions for instance chmod 700 /usr/bin/replacer
+	than you can invoke it from any folder you are actually working in :-)
+"""
 
 import os
 
