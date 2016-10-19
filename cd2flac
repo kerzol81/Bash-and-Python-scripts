@@ -6,6 +6,12 @@ RED='\033[1;31m'
 GREEN='\033[1;32m'
 NC='\033[0m'
 
+function displayTitle(){
+	printf "....................................\n"
+	printf ":    CD to flac archiver srcipt    :\n"
+	printf "....................................\n"
+}
+
 function error(){
 		if [ "$?" -ne 0 ];then
 			printf "${RED}[-] Error: something went wrong...\n${NC}"
@@ -58,7 +64,7 @@ function archiving(){
 }
 
 function main(){
-	printf ":::: CD to flac archiver srcipt ::::\n\n"
+	displayTitle
 	isFlacInstalled
 	isCDparanoiaInstalled
 	archiving
