@@ -1,0 +1,67 @@
+#!/bin/bash
+#
+# CD to flac archiver script
+
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+NC='\033[0m'
+
+function error(){
+		if [ "$?" -ne 0 ];then
+			printf "${RED}[-] Error, something went wrong...\n${NC}"
+			exit 1
+		fi
+}
+
+function isFlacInstalled(){
+	
+		man flac >/dev/null 2>&1
+	
+		if [ "$?" -ne 0 ];then
+			printf "${RED}[-] Error: flac is not installed on this system!\n${NC}"
+			echo "Enter your password to install it!"
+			sudo apt-get install flac -y
+		fi
+}
+
+function isCDparanoiaInstalled(){
+	
+		man cdparanoia > /dev/null 2>&1
+	
+		if [ "$?" -ne 0 ];then
+			printf "${RED}[-] Error: cdparanoia is not installed on this system!\n${NC}"
+			echo "Enter your password to install it!"
+			sudo apt-get install cdparanoia -y
+		fi
+}
+
+function archiving(){
+		
+		printf "${GREEN}[-] Enter folder name:\n${NC}"
+		read folder
+		mkdir -p $folder
+		cd $folder
+		echo "[-] Please insert CD!"
+		read -p "[-] Press [Enter] key to start backup ..."
+		sleep 2
+		echo "[-] Archiving has been started ..."
+		sleep 2
+		cdparanoia -B
+		error
+		echo "[-] Converting to flac format ..."
+		flac --keep-foreign-metadata *.wav
+		error
+		echo "[-] Removing wav files"
+		rm -rf *.wav
+		error
+		printf "${GREEN}[-] Done...\n${NC}"
+}
+
+function main(){
+	printf ":::: CD to flac archiver srcipt ::::\n\n"
+	isFlacInstalled
+	isCDparanoiaInstalled
+	archiving
+}
+
+main
