@@ -8,7 +8,7 @@ NC='\033[0m'
 
 function error(){
 		if [ "$?" -ne 0 ];then
-			printf "${RED}[-] Error, something went wrong...\n${NC}"
+			printf "${RED}[-] Error: something went wrong...\n${NC}"
 			exit 1
 		fi
 }
