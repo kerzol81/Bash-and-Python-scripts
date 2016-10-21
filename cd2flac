@@ -44,7 +44,7 @@ function isCDparanoiaInstalled(){
 function archiving(){
 		
 		printf "${GREEN}[-] Enter folder name:\n${NC}"
-		read folder
+		read -r folder
 		mkdir -p $folder
 		cd $folder
 		echo "[-] Please insert CD!"
