@@ -46,7 +46,7 @@ function archiving(){
 		printf "${GREEN}[-] Enter folder name:\n${NC}"
 		read -r folder
 		mkdir -p $folder
-		cd $folder
+		cd $folder || exit 1
 		echo "[-] Please insert CD!"
 		read -p "[-] Press [Enter] key to start backup ..."
 		sleep 2
