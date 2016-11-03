@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# syncronising files from an AXIS video server
+# schedule the script with crontab -e 
+# schecuding examples:
+#
+# schecuding examples:
+#
+# to make it run in every 5 minute:
+# */5 * * * *  /path/to/script/$PROGNAME
+#
+# every 10 minute from 20:00 to 04:00
+# */10 19-23,0-4 * * * * * * /path/to/script/$PROGNAME
+
+AXIS_IP='10.254.11.20'
+AXIS_PORT='21'
+USER='root'
+PASS='root'
+LOCAL_FOLDER="$HOME/axis/"
+AXIS_SD="/var/spool/storage/SD_DISK"
+
+###
+
+RED='\033[1;31m'
+NC='\033[0m'	                                         #no color
+EXTENSION='mkv'
+SPACE=$(df -h | tr -d "%" | awk '/sda/ { print $5 }')  # HDD space on VM
+HDD_MAX=95											                       # max space allowed on HDD
+
+function no_multiple_instance(){
+	if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+		printf "${RED}[-] only one instance is allowed\n${NC}"
+		exit 1
+	fi
+}
+
+function checkSpace(){
+	if [ "$SPACE" -ge "$HDD_MAX" ]; then
+		printf "${RED}[-] HDD is full, exiting...\n${NC}"
+		exit 2
+	fi
+	
+}
+
+function checkAxis(){
+	
+	if ! ping -c 1 "$AXIS_IP"; then
+		printf "${RED}[-] the axis server is not available\n${NC}"
+		exit 3
+	fi
+}
+
+function syncFromAxis(){
+	mkdir -p "$LOCAL_FOLDER"
+	cd "$LOCAL_FOLDER" || exit 4
+	
+	if ! wget -m --timeout=10 --tries=3 --user="$USER" --password="$PASS" ftp://"$AXIS_IP":"$AXIS_PORT"/"$AXIS_SD" --directory-prefix="$LOCAL_FOLDER" --reject "*.xml, *.db"; then	
+		printf "${RED}[-] could not download, server may not be available... \n${NC}"
+		exit 5
+	fi
+}
+
+function main(){
+	no_multiple_instance
+	checkSpace
+	checkAxis
+	syncFromAxis
+}
+
+main
