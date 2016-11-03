@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# syncronising files from an AXIS video server
-# schedule the script with crontab -e 
+# Syncronising files from an AXIS video server
+# Scheduling the script with crontab -e 
 # schecuding examples:
 #
-# schecuding examples:
+# Scheduling examples:
 #
 # to make it run in every 5 minute:
 # */5 * * * *  /path/to/script/$PROGNAME
