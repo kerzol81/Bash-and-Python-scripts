@@ -28,8 +28,8 @@ function usage() {
 }
 
 function is_axis(){
-	ping -c 1 $AXIS_IP
-	if [ $? -ne 0 ];then
+	
+	if ! ping -c 1 "$AXIS_IP";then
 		echo "The axis server is not available..."
 		exit 1
 	fi
@@ -41,19 +41,16 @@ function syncronising(){
 }
 
 function delete_oldest_folder(){
-	cd $LOCAL_FOLDER
+	cd "$LOCAL_FOLDER" || exit 1
 	if [ "$SPACE" -ge "$MAX" ];then
 		rm -rf `ls -t | tail -n 1`
 	fi
 }
-	
-}
-
 
 function arranging(){
 
 	mkdir -p $TO_FOLDER
-	cd $TO_FOLDER
+	cd $TO_FOLDER || exit 1
 
 	for i in `find $LOCAL_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
 		do 
