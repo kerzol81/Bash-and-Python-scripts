@@ -65,14 +65,12 @@ function arrange(){
 	
 	for i in $(find "$LOCAL_FOLDER" -type f -name *."$EXTENSION"); do
 
-	NEWFOLDER=$(echo "$i" | grep -Eo '[0-9]{8}')
+		NEWFOLDER=$(echo "$i" | grep -Eo '[0-9]{8}')
 
-	if [ ! -d "/$ARRANGE_TO_FOLDER/$NEWFOLDER" ]; then
-		mkdir -p /"$ARRANGE_TO_FOLDER"/"$NEWFOLDER"
-	fi
-
+		if [ ! -d "/$ARRANGE_TO_FOLDER/$NEWFOLDER" ]; then
+			mkdir -p /"$ARRANGE_TO_FOLDER"/"$NEWFOLDER"
+		fi
 		rsync -vah --progress "$i" /"$ARRANGE_TO_FOLDER"/"$NEWFOLDER"/
-
 	done
 }
 
