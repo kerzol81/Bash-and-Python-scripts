@@ -47,7 +47,7 @@ function delete_oldest_folder(){
 	fi
 }
 
-function arranging(){
+function arranging_old(){
 
 	mkdir -p $TO_FOLDER
 	cd $TO_FOLDER || exit 1
@@ -64,6 +64,21 @@ function arranging(){
 		done
 }
 
+function arranging(){
+	
+	for i in $(find $LOCAL_FOLDER -type f -name *.$EXTENSION); do
+
+		NEWDIR=$(echo "$i" | grep -Eo '[0-9]{8}')
+
+		if [ ! -d "/$TO_FOLDER/$NEWDIR" ]; then
+			mkdir -p /$TO_FOLDER/$NEWDIR
+		fi
+
+		rsync -vah --progress $i /$TO_FOLDER/$NEWDIR/
+
+	done
+	
+}
 
 function main(){
 	is_axis
