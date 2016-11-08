@@ -18,6 +18,7 @@ USER='root'
 PASS='root'
 LOCAL_FOLDER="$HOME/axis/"
 AXIS_SD="/var/spool/storage/SD_DISK"
+ARRANGE_TO_FOLDER="$HOME/axis_arranged"
 
 ###
 
@@ -60,11 +61,27 @@ function syncFromAxis(){
 	fi
 }
 
+function arrange(){
+	
+	for i in $(find "$LOCAL_FOLDER" -type f -name *."$EXTENSION"); do
+
+	NEWFOLDER=$(echo "$i" | grep -Eo '[0-9]{8}')
+
+	if [ ! -d "/$ARRANGE_TO_FOLDER/$NEWFOLDER" ]; then
+		mkdir -p /"$ARRANGE_TO_FOLDER"/"$NEWFOLDER"
+	fi
+
+		rsync -vah --progress "$i" /"$ARRANGE_TO_FOLDER"/"$NEWFOLDER"/
+
+	done
+}
+
 function main(){
 	no_multiple_instance
 	checkSpace
 	checkAxis
 	syncFromAxis
+	arrange
 }
 
 main
