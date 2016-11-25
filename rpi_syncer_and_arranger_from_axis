@@ -2,15 +2,15 @@
 # syncronising and arranging files from an AXIS video server
 # invoke the script with cron
 
-AXIS_IP='10.0.0.100'
+AXIS_IP=$1
+USER=$2
+PASS=$3
 AXIS_PORT='21'
-USER='root'
-PASS='root'
 LOCAL_FOLDER='/$HOME/axis'
-AXIS_SD='/var/spool/storage/SD_DISK'
 TO_FOLDER='/$HOME/axis_arranged/'
 MAX='99'					# HDD max
 EXTENSION='mkv'
+AXIS_SD='/var/spool/storage/SD_DISK'
 
 function usage() {
 	readonly PROGNAME=`basename $0`
