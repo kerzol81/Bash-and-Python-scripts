@@ -2,13 +2,13 @@
 # syncronising and arranging files from an AXIS video server
 # invoke the script with cron
 
-AXIS_IP='192.168.1.10'
+AXIS_IP='10.0.0.100'
 AXIS_PORT='21'
 USER='root'
 PASS='root'
-LOCAL_FOLDER='/mnt/recordings'
+LOCAL_FOLDER='/$HOME/axis'
 AXIS_SD='/var/spool/storage/SD_DISK'
-TO_FOLDER='/mnt/recordings/arranged'
+TO_FOLDER='/$HOME/axis_arranged/'
 MAX='99'					# HDD max
 EXTENSION='mkv'
 
@@ -40,35 +40,11 @@ function syncronising(){
 	wget -m --timeout=10 --tries=3 --user=$USER --password=$PASS ftp://$AXIS_IP:$AXIS_PORT/$AXIS_SD --directory-prefix=$LOCAL_FOLDER --reject "*.xml, *.db"
 }
 
-function delete_oldest_folder(){
-	cd "$LOCAL_FOLDER" || exit 1
-	if [ "$SPACE" -ge "$MAX" ];then
-		rm -rf `ls -t | tail -n 1`
-	fi
-}
-
-function arranging_old(){
-
-	mkdir -p $TO_FOLDER
-	cd $TO_FOLDER || exit 1
-
-	for i in `find $LOCAL_FOLDER -name *.$EXTENSION | awk -F '_' '{print $5}'|awk -F '/' '{print $2}'| sort | uniq`; 
-		do 
-			if [ ! -d $i ]; then
-				mkdir -p $i
-				mv -u `find $LOCAL_FOLDER -name $i*.mkv` $i
-			else
-				mv -u `find $LOCAL_FOLDER -name $i*.mkv` $i
-			fi
-
-		done
-}
-
 function arranging(){
 	
 	for i in $(find "$LOCAL_FOLDER" -type f -name *."$EXTENSION"); do
 
-	NEWDIR=$(echo "$i" | grep -Eo '[0-9]{8}')
+	NEWDIR=$(echo "$i" | grep -Eo '[0-9]{8}' | sort | uniq)
 
 	if [ ! -d "/$TO_FOLDER/$NEWDIR" ]; then
 		mkdir -p /"$TO_FOLDER"/"$NEWDIR"
