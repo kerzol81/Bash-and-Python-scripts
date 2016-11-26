@@ -7,9 +7,9 @@ AXIS_PORT='21'
 USER=$2
 PASS=$3
 LOCAL_FOLDER="$HOME/axis"
-TO_FOLDER="$HOME/axis_arranged"						# the folder where the files will be arranged
-MAX='99'											# HDD max, reacing it the script exits
-EXTENSION='mkv'										# the video file extensions
+TO_FOLDER="$HOME/axis_arranged"					# the folder where the files will be arranged
+MAX='99'							# HDD max, reacing it the script exits
+EXTENSION='mkv'							# the video file extensions
 
 function check_args(){
 
