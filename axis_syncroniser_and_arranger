@@ -107,4 +107,4 @@ function main(){
 	arrange
 }
 
-main
+main "$@"
