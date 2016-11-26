@@ -95,7 +95,7 @@ function arrange(){
 		
 		rsync -vah --progress "$i" /"$TO_FOLDER"/"$NEW_FOLDER"/
 	done
-	rm -rf "$LOCAL_FOLDER"
+	#rm -rf "$LOCAL_FOLDER"
 }
 
 function main(){
