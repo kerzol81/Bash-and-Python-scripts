@@ -6,9 +6,10 @@ AXIS_IP=$1
 AXIS_PORT='21'
 USER=$2
 PASS=$3
-LOCAL_FOLDER="/$HOME/axis"
-TO_FOLDER="/$HOME/axis_arranged/"				# the folder where the files will be arranged
-MAX='99'							# HDD max, reacing it the script exits
+LOCAL_FOLDER="$HOME/axis"
+TO_FOLDER="$HOME/axis_arranged"						# the folder where the files will be arranged
+MAX='99'											# HDD max, reacing it the script exits
+EXTENSION='mkv'										# the video file extensions
 
 function check_args(){
 
@@ -42,7 +43,7 @@ function usage(){
 function check_instances(){
 
 		if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
-			echo 'only one instance is allowed at a time'
+			echo '[-] only one instance is allowed at a time'
 			exit 2
 		fi
 }
@@ -74,8 +75,7 @@ function check_axis(){
 function syncronise(){
 	
 	local AXIS_SD='/var/spool/storage/SD_DISK'	# remote folder on Axis, where the video files are stored
-	local EXTENSION='mkv'						# the video file extensions
-	
+		
 	if [ ! -d "$LOCAL_FOLDER" ];then
 		mkdir -p "$LOCAL_FOLDER"
 	fi
@@ -87,7 +87,7 @@ function arrange(){
 	check_hdd
 	for i in $(find "$LOCAL_FOLDER" -type f -name *."$EXTENSION"); do
 
-		local NEW_FOLDER=$(echo "$i" | grep -Eo '[0-9]{8}' | sort | uniq)
+		NEW_FOLDER=$(echo "$i" | grep -Eo '[0-9]{8}' | sort | uniq)
 
 		if [ ! -d "/$TO_FOLDER/$NEW_FOLDER" ]; then
 			mkdir -p /"$TO_FOLDER"/"$NEW_FOLDER"
@@ -95,7 +95,6 @@ function arrange(){
 		
 		rsync -vah --progress "$i" /"$TO_FOLDER"/"$NEW_FOLDER"/
 	done
-	#rm -rf "$LOCAL_FOLDER"
 }
 
 function main(){
