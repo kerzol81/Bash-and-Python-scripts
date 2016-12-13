@@ -7,14 +7,14 @@ AXIS_PORT='21'
 USER=$2
 PASS=$3
 LOCAL_FOLDER="$HOME/axis"
-TO_FOLDER="$HOME/axis_arranged"					# the folder where the files will be arranged
-MAX='99'							# HDD max, reacing it the script exits
-EXTENSION='mkv'							# the video file extensions
+TO_FOLDER="$HOME/axis_arranged"						# the folder where the files will be arranged
+MAX='99'											# HDD max, reacing it the script exits
+EXTENSION='mkv'										# the video file extensions
 
 function check_args(){
 
 		if [ "$#" -eq 0 ]; then
-    		echo '[-] No arguments passed to the scipt!'
+    		echo '[-] Pass args to the scipt!'
 			usage
 			exit 1
 		fi
@@ -26,6 +26,9 @@ function usage(){
 	cat <<- EOF
 	
 	usage:
+	--------------------------------------------
+	./$PROGNAME <IP> <USERNAME> <PASSWORD>
+	--------------------------------------------
 		
 	crontab -e and append one of these examples:
 	
@@ -97,6 +100,10 @@ function arrange(){
 	done
 }
 
+function remove(){
+		rm -rf "$LOCAL_FOLDER"
+}
+
 function main(){
 	check_args "$@"
 	check_instances	
@@ -104,6 +111,7 @@ function main(){
 	check_axis
 	syncronise
 	arrange
+	#remove
 }
 
 main "$@"
