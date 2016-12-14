@@ -1,0 +1,18 @@
+#!/bin/bash
+
+function clean(){
+	local logfile="/var/log/logkeys.log"
+	local cleaned_logfile="/var/log/logkeys_cleaned.log"
+	
+	if [ ! -f $logfile ]; then
+		exit 1
+	else 
+		sed '/<.*>/d' $logfile > $cleaned_logfile
+	fi
+}
+
+function main(){
+	clean
+}
+
+main
