@@ -1,6 +1,6 @@
 # Pillreminder script for Girfriend
 #
-# remindes (sends email with an attachment) 21 + 7 days
+# remindes her  21 + 7 days (sends email with an attachment)
 # randomly takes a picture as an attachment from /pictures folder
 #
 # mutt needs to be installed and configured before (.muttrc)
