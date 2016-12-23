@@ -19,7 +19,7 @@ function sendMessage(){
 	if [ "$day" -le 21 ];then
 		echo "Day: $day" | mutt -s "Pill reminder: take the pill, "$name"!" "$to" -a "$pic"
 	elif [ "$day" -le 28 ];then
-		echo "Day: $day" | mutt -s "Pill reminder: buy pills my Precious!" "$to" -a "$pic"
+		echo "Day: $day" | mutt -s "Pill reminder: buy pills "$name"!" "$to" -a "$pic"
 	fi
 }
 
