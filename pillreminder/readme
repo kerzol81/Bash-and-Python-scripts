@@ -4,7 +4,7 @@
 # randomly takes a picture as an attachment from /pictures folder
 #
 # mutt needs to be installed and configured before (.muttrc)
-# adjust pilldays.cfg file according to the day already taken
+# adjust pilldays.cfg file according already taken pills
 # run it once a day with cron
 
 
