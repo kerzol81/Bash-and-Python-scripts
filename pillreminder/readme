@@ -1,0 +1,10 @@
+# Pillreminder script for Girfriend
+#
+# remindes (sends email with an attachment) 21 + 7 days
+# randomly takes a picture as an attachment from /pictures folder
+#
+# mutt needs to be installed and configured before (.muttrc)
+# adjust pilldays.cfg file according to the day already taken
+# run it once a day with cron
+
+
