@@ -29,10 +29,10 @@ function increaseDay(){
 }
 
 function getDay(){
-	if [ ! -e $conf ]; then
+	if [ ! -e "$conf" ]; then
 		createFirstConfig
 	fi
-	source $conf
+	source "$conf"
 	if [ $day -ge 28 ];then
 		createFirstConfig
 	fi
