@@ -16,11 +16,13 @@ function sendMessage(){
 		exit 1
 	fi
 	source "$conf"
+	message=""
 	if [ "$day" -le 21 ];then
-		echo "Day: $day" | mutt -s "Pill reminder: take the pill, "$name"!" "$to" -a "$pic"
+		local message="Take the pill"
 	elif [ "$day" -le 28 ];then
-		echo "Day: $day" | mutt -s "Pill reminder: buy pills "$name"!" "$to" -a "$pic"
+		local message="Buy pills "$name"!"
 	fi
+	echo "Day: $day" | mutt -s "$message" "$to" -a "$pic"
 }
 
 main(){
