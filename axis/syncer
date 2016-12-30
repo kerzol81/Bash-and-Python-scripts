@@ -10,9 +10,9 @@ NAME="$4"
 
 #
 AXIS_PORT='21'
-LOCAL_FOLDER="${HOME}"/"axis_remote_${NAME}_SD_DISK"		  # temporary mount point
-ARRANGED_FOLDER="${HOME}"/"${NAME}"							          # the folder where the files will be arranged
-EXTENSION='mkv'											                      # the video file extensions
+LOCAL_FOLDER="${HOME}"/"axis_remote_${NAME}_SD_DISK"	# temporary mount point
+ARRANGED_FOLDER="${HOME}"/"${NAME}"			# the folder where the files will be arranged
+EXTENSION='mkv'						# the video file extensions
 
 function check_args(){
 
