@@ -1,5 +1,4 @@
 #!/bin/bash
-# syncronising and arranging files from an AXIS video server
 # the script mounts the remote FTP folder, and syncronises and arranges the files into subfolders
 set -x
 
