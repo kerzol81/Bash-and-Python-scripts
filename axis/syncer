@@ -1,0 +1,142 @@
+#!/bin/bash
+# syncronising and arranging files from an AXIS video server
+# the script mounts the remote FTP folder, and syncronises and arranges the files into subfolders
+set -x
+
+AXIS_IP="$1"
+USER="$2"
+PASS="$3"
+NAME="$4"
+
+#
+AXIS_PORT='21'
+LOCAL_FOLDER="${HOME}"/"axis_remote_${NAME}_SD_DISK"		  # temporary mount point
+ARRANGED_FOLDER="${HOME}"/"${NAME}"							          # the folder where the files will be arranged
+EXTENSION='mkv'											                      # the video file extensions
+
+function check_args(){
+
+		if [ "$#" -eq 0 ]; then
+    		echo '[-] Pass args to the scipt!'
+			usage
+			exit 1
+		fi
+}
+
+
+function usage(){
+	readonly PROGNAME=`basename $0`
+
+	cat <<- EOF
+	
+	usage:
+	--------------------------------------------
+	./$PROGNAME <IP> <USERNAME> <PASSWORD>
+	--------------------------------------------
+		
+	crontab -e and append one of these examples:
+	
+	run it in every minute:
+	
+	*/1 * * * *  /path/to/script/$PROGNAME <IP> <USERNAME> <PASSWORD> <SITE NAME>
+	
+	run it in every 30 minutes from 20:00 until 04:00 o' clock:
+	
+	*/30 20-23,0-4 * * * /path/to/script/$PROGNAME <IP> <USERNAME> <PASSWORD> <SITE NAME>
+
+	EOF
+}
+
+function check_instances(){
+
+		if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
+			echo '[-] only one instance is allowed at a time'
+			exit 2
+		fi
+}
+
+function check_hdd(){
+  	
+  	local SPACE=$(df -h | tr -d "%" | awk '/sda/ { print $5 }')
+  	local INT='^[0-9]+$'
+	local MAX='99'
+	
+	if ! [[ "$SPACE" =~ $INT ]] ; then
+   		echo "[-] something went wrong while figuring out disk space"
+   		exit 3
+	fi
+	
+	if [ "$SPACE" -ge $MAX ];then
+		exit 4
+	fi
+}
+
+function check_axis(){
+	
+	if ! ping -c 1 "$AXIS_IP";then
+		echo "[-] The axis server is not available..."
+		exit 5
+	fi
+	
+}
+
+function mountRemote(){
+	local AXIS_SD="/var/spool/storage/SD_DISK/"
+	
+	if [ ! -d "$LOCAL_FOLDER" ];then
+		mkdir -p "$LOCAL_FOLDER"
+	fi
+	
+	echo "[*] Mounting remote filesystem..."
+	if ! curlftpfs -v "${USER}":"${PASS}"@"${AXIS_IP}""$AXIS_SD" "$LOCAL_FOLDER";then
+		echo '[-] Error: couldn'\''t mount...'
+	fi
+}
+
+function umountRemote(){
+	if ! fusermount -u "$LOCAL_FOLDER";then
+		echo '[-] Error: couldn'\''t umount...'
+		exit 6
+	fi	
+}
+
+function arrange(){
+	for i in $(find "$LOCAL_FOLDER" -type f -name *."$EXTENSION"); do
+
+		local DAY=$(echo "$i" | grep -Eo '[0-9]{8}' | sort | uniq)
+
+		if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
+			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
+		fi
+		
+		rsync -vah --progress "$i" /"$ARRANGED_FOLDER"/"$DAY"/
+	done
+}
+
+function arrangeSegment(){
+	check_hdd
+	
+	for i in $(seq $FROM $TO);do
+		
+		local DAY=$(echo "$i" | grep -Eo '[0-9]{8}' | sort | uniq)
+
+		if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
+			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
+		fi
+		
+		rsync -vah --progress "$i" /"$ARRANGED_FOLDER"/"$NEW_FOLDER"/
+	done
+}	
+
+function main(){
+	check_args "$@"
+  check_instances	
+	check_hdd	
+	check_axis
+	mountRemote
+	arrange
+	umountRemote
+}
+
+main "$@"
+
