@@ -23,7 +23,6 @@ function check_args(){
 		fi
 }
 
-
 function usage(){
 	readonly PROGNAME=`basename $0`
 
@@ -130,7 +129,7 @@ function arrangeSegment(){
 
 function main(){
 	check_args "$@"
-  check_instances	
+	check_instances	
 	check_hdd	
 	check_axis
 	mountRemote
