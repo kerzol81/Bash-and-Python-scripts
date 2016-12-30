@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# RTSP stream recording from VIVOTEK videoservers
+# run it with cron:
+# */5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>
+
+VIDEOSERVER=$1                              # IP address
+USERNAME=$2
+PASSWORD=$3
+STREAM=$4
+SPLIT='300'			            # 300 = 5 min, make sure you set it according to the cron job
+STREAM="rtsp://$USERNAME:$PASSWORD@$VIDEOSERVER:554/live$STREAM.sdp"
+FOLDER='/mnt/recordings'
+DEVICE='sda'		            	    # external HDD on Raspberry Pi usually sda
+
+function hdd_check(){
+	mkdir -p "$FOLDER"
+	if [ "$?" -ne 0 ];then
+		echo "no hdd attached"
+		exit 1
+	fi
+}
+
+
+function hdd_full(){		
+	# if the mounted hdd space is over 98% the script exits
+	local SPACE=$(df -h | tr -d "%" | grep "$DEVICE" | awk '{ print $5 }')
+	local MAX=98
+		
+	if [ "$SPACE" -ge "$MAX" ];then
+		exit 2
+	fi
+}
+
+
+function record(){	
+	mkdir -p "$FOLDER"/$(date +%Y-%m-%d__$VIDEOSERVER)
+	vlc "$STREAM" -I dummy --run-time "$SPLIT" --play-and-exit --sout "$FOLDER"/$(date +%Y-%m-%d__$VIDEOSERVER)/$(date +%Y-%m-%d__%H_%M).mp4
+}
+
+
+function main(){	
+	if [ $# -eq 0 ];then
+		echo "RTSP stream recording script from VIVOTEK videoservers"
+		echo "Edit CRON : crontab -e"
+		echo ""
+		echo "*/5 * * * * /path/to/script <IP>  <USERNAME>  <PASSWD>  <STREAM>"
+	fi
+	hdd_check
+	cd $FOLDER || exit 4
+    	hdd_full
+	record
+	
+}
+
+main
