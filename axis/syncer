@@ -111,21 +111,6 @@ function arrange(){
 	done
 }
 
-function arrangeSegment(){
-	check_hdd
-	
-	for i in $(seq $FROM $TO);do
-		
-		local DAY=$(echo "$i" | grep -Eo '[0-9]{8}' | sort | uniq)
-
-		if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
-			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
-		fi
-		
-		rsync -vah --progress "$i" /"$ARRANGED_FOLDER"/"$NEW_FOLDER"/
-	done
-}	
-
 function main(){
 	check_args "$@"
 	check_instances	
@@ -137,4 +122,3 @@ function main(){
 }
 
 main "$@"
-
