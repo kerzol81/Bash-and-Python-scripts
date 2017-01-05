@@ -15,7 +15,7 @@ EXTENSION='mkv'						# the video file extensions
 
 function check_args(){
 
-		if [ "$#" -eq 0 ]; then
+		if [ "$#" -eq 0 ] || [ "$#" -lt 4 ]; then
     		echo '[-] Pass args to the scipt!'
 			usage
 			exit 1
@@ -29,7 +29,7 @@ function usage(){
 	
 	usage:
 	--------------------------------------------
-	./$PROGNAME <IP> <USERNAME> <PASSWORD>
+	./$PROGNAME <IP> <USERNAME> <PASSWORD> <SITE NAME>
 	--------------------------------------------
 		
 	crontab -e and append one of these examples:
@@ -45,13 +45,6 @@ function usage(){
 	EOF
 }
 
-function check_instances(){
-
-		if [ "$(pgrep -x $(basename $0))" != "$$" ]; then
-			echo '[-] only one instance is allowed at a time'
-			exit 2
-		fi
-}
 
 function check_hdd(){
   	
@@ -112,13 +105,13 @@ function arrange(){
 }
 
 function main(){
-	check_args "$@"
-	check_instances	
+	check_args "$@"	
 	check_hdd	
 	check_axis
 	mountRemote
 	arrange
 	umountRemote
+	exit 0
 }
 
 main "$@"
