@@ -80,8 +80,9 @@ function mountRemote(){
 	
 	echo "[*] Mounting remote filesystem..."
 	if ! curlftpfs -v "${USER}":"${PASS}"@"${AXIS_IP}""$AXIS_SD" "$LOCAL_FOLDER";then
-		echo '[-] Error: couldn'\''t mount...'
+		echo "[-] Error: could not mount..."
 	fi
+	
 }
 
 function umountRemote(){
@@ -100,8 +101,19 @@ function arrange(){
 			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
 		fi
 		
-		rsync -vah --progress "$i" /"$ARRANGED_FOLDER"/"$DAY"/
+		if ! rsync -vah --progress "$i" /"$ARRANGED_FOLDER"/"$DAY"/; then
+			echo "[-] Error: Could not rsync over folders"
+		fi
+		
 	done
+
+}
+
+function deleteLocalFolder(){
+		sleep 1
+		if ! rm -rf "$LOCAL_FOLDER"; then
+			echo "[-] Error: could not delete mounted folder"
+		fi
 }
 
 function main(){
@@ -111,6 +123,7 @@ function main(){
 	mountRemote
 	arrange
 	umountRemote
+	deleteLocalFolder
 	exit 0
 }
 
