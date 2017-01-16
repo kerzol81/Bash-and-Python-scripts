@@ -1,0 +1,18 @@
+import os, time, shutil
+
+os.chdir('.')
+
+for f in os.listdir('.'):
+    file_creation_time = time.gmtime(os.path.getmtime(f))
+    dir_creation_time = str(file_creation_time.tm_year) + '-' + str(file_creation_time.tm_mon) + '-' + str(file_creation_time.tm_mday)
+
+    if not os.path.isdir(dir_creation_time):
+        os.mkdir(dir_creation_time)
+    if '.py' in f:
+        continue
+
+    else:
+        try:
+            shutil.move(f, dir_creation_time)
+        except:
+            pass
