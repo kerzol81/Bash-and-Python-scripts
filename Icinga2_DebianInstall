@@ -18,6 +18,6 @@ echo 'include "/usr/share/nano/icinga2.nanorc"' >> ~/.nanorc
 apt-get install mysql-server mysql-client -y
 apt-get install icinga2-ido-mysql -y
 
-echo 'Continue Icinga2 documentation from setting up MySQL database'
+echo 'Continue from Icinga2 documentation... (setting up MySQL database)'
 
 exit 0
