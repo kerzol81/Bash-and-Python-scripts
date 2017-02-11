@@ -3,23 +3,21 @@
 # Icinga2 install script - Debian Jessie
 
 #add the Icinga repository to the package management configuration
-
 wget -O - http://packages.icinga.com/icinga.key | apt-key add -
 echo 'deb http://packages.icinga.com/debian icinga-jessie main' >/etc/apt/sources.list.d/icinga.list
 apt-get update -y
-
 apt-get install icinga2 -y
 apt-get install nagios-plugins -y
 
-# syntax highlighting:
-
+# syntax highlighting with nano:
 cp /etc/nanorc ~/.nanorc
-
 echo '## Icinga 2' >> ~/.nanorc
-
 echo 'include "/usr/share/nano/icinga2.nanorc"' >> ~/.nanorc
 
+# MySQL
 apt-get install mysql-server mysql-client -y
 apt-get install icinga2-ido-mysql -y
 
 echo 'Continue Icinga2 documentation from setting up MySQL database'
+
+exit 0
