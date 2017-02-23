@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# the shared folder on a TS series QNAP:
 SHARED_FOLDER="/share/testing/"
 
+#
 EXTENSION="mkv"
-ARRANGED_FOLDER="$SHARED_FOLDER/arranged"
+ARRANGED_FOLDER="$SHARED_FOLDER/arranged_video_files/"
 
 
 for i in $(find "$SHARED_FOLDER" -type f -name *."$EXTENSION"); do
