@@ -1,8 +1,9 @@
 #!/bin/bash
 set -x
 
+# EXPERIMENTAL SCRIPT
 # the scripts mounts an Axis Camera's SD Card, and a TS Qnap Nas's shared folder
-# rsync from SD --> NAS in better folder structure
+# rsync from SD --> NAS with better folder structure
 
 AXIS_IP=$1
 AXIS_USR=$2
