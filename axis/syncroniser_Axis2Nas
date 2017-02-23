@@ -13,7 +13,7 @@ NAS_IP=$4
 NAS_USR=$5
 NAS_SHARED_FOLDER=$6
 
-function check_args(){
+function checkArgs(){
 
 		if [ "$#" -eq 0 ] || [ "$#" -lt 4 ]; then
     		echo '[-] Pass args to the scipt!'
@@ -45,6 +45,7 @@ function usage(){
 }
 
 main(){
+  checkArgs "$@"
   mountAxis
   mountNas
   syncroniseAxisToNas
