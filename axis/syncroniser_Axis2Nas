@@ -1,0 +1,55 @@
+#!/bin/bash
+set -x
+
+# the scripts mounts an Axis Camera's SD Card, and a TS Qnap Nas's shared folder
+# rsync from SD --> NAS in better folder structure
+
+AXIS_IP=$1
+AXIS_USR=$2
+AXIS_PWD=$3
+AXIS_SD="/var/spool/storage/SD_DISK"
+
+NAS_IP=$4
+NAS_USR=$5
+NAS_SHARED_FOLDER=$6
+
+function check_args(){
+
+		if [ "$#" -eq 0 ] || [ "$#" -lt 4 ]; then
+    		echo '[-] Pass args to the scipt!'
+			usage
+			exit 1
+		fi
+}
+
+function usage(){
+	readonly PROGNAME=`basename $0`
+
+	cat <<- EOF
+	
+	usage:
+	--------------------------------------------
+	./$PROGNAME <AXIS_IP> <AXIS_USERNAME> <Axis_PASSWORD> <NAS_IP> <NAS_USERNAME> <NAS_PASSWORD> <NAS_SHARED_FOLDER>
+	--------------------------------------------
+		
+	crontab -e and append one of these examples:
+	
+	run it in every 5 minutes:
+	
+	*/5 * * * *  /path/to/script/$PROGNAME <AXIS_IP> <AXIS_USERNAME> <Axis_PASSWORD> <NAS_IP> <NAS_USERNAME> <NAS_PASSWORD> <NAS_SHARED_FOLDER>
+	
+	run it in every 30 minutes from 20:00 until 04:00 o' clock:
+	
+	*/30 20-23,0-4 * * * /path/to/script/$PROGNAME <IP> <USERNAME> <PASSWORD> <SITE NAME>
+	EOF
+}
+
+main(){
+  mountAxis
+  mountNas
+  syncroniseAxisToNas
+  unmountAxis
+  unmountNas
+}
+
+main "$@"
