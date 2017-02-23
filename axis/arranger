@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SHARED_FOLDER="/share/testing/"
+
+EXTENSION="mkv"
+ARRANGED_FOLDER="$SHARED_FOLDER/arranged"
+
+
+for i in $(find "$SHARED_FOLDER" -type f -name *."$EXTENSION"); do
+	DAY=$(echo "$i" | awk -F '/' '{print $8}' | awk -F '_' '{print $1}' | sort | uniq)
+	
+	if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
+			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
+	fi
+	
+	if ! rsync -vah --progress --update "$i" /"$ARRANGED_FOLDER"/"$DAY"/; then
+			echo "[-] Error: Could not rsync the folder pairs"
+	fi
+	
+done
