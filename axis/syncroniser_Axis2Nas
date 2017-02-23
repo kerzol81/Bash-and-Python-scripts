@@ -12,7 +12,8 @@ AXIS_SD="/var/spool/storage/SD_DISK"
 
 NAS_IP=$4
 NAS_USR=$5
-NAS_SHARED_FOLDER=$6
+NAS_PWD=$6
+NAS_SHARED_FOLDER=$7
 
 function checkArgs(){
 
