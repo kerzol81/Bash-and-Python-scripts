@@ -29,7 +29,6 @@ for i in $(find "$SHARED_FOLDER" -type f -name *."$EXTENSION"); do
 	if ! ln -sfn "$i"; then
         	echo "[-] Error: Could not create symbolic links"
 	fi
-	
 done
 
 exit 0
