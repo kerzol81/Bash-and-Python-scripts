@@ -1,23 +1,30 @@
 #!/bin/bash
 
-# the shared folder on a TS series QNAP
-# the script utilises RSYNC -> double space needed
-SHARED_FOLDER="/share/testing/"
+FOLDER=$1
 
-#
+WORK_FOLDER="/share/$FOLDER/"
+ARRANGED_FOLDER="/share/$FOLDER/videos_by_day"
 EXTENSION="mkv"
-ARRANGED_FOLDER="$SHARED_FOLDER/arranged_video_files/"
 
+if [ "$#" -eq 0 ]; then  
+	echo '[-] You need add an argument folder! ex.:'
+	echo './arranger <folder>'
+	exit 1 
+fi 
 
-for i in $(find "$SHARED_FOLDER" -type f -name *."$EXTENSION"); do
+cd "$WORK_FOLDER"
+
+for i in $(find "$WORK_FOLDER" -type f -name *."$EXTENSION"); do
 	DAY=$(echo "$i" | awk -F '/' '{print $8}' | awk -F '_' '{print $1}' | sort | uniq)
 	
 	if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
 			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
 	fi
 	
-	if ! rsync -vah --progress --update "$i" /"$ARRANGED_FOLDER"/"$DAY"/; then
-			echo "[-] Error: Could not rsync the folder pairs"
+	cd "$ARRANGED_FOLDER"/"$DAY"
+	
+	if ! ln -s "$i"; then
+			echo "[-] Error: Could not create symbolic links"
 	fi
 	
 done
