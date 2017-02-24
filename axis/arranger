@@ -2,29 +2,34 @@
 
 FOLDER=$1
 
-WORK_FOLDER="/share/$FOLDER/"
+SHARED_FOLDER="/share/$FOLDER/"
 ARRANGED_FOLDER="/share/$FOLDER/videos_by_day"
 EXTENSION="mkv"
 
 if [ "$#" -eq 0 ]; then  
-	echo '[-] You need add an argument folder! ex.:'
+	echo '[-] You need add an argument folder'
 	echo './arranger <folder>'
 	exit 1 
 fi 
 
-cd "$WORK_FOLDER"
+if ! cd $SHARED_FOLDER; then
+        echo '[-] the shared folder does not exist'
+        exit 1
+fi
 
-for i in $(find "$WORK_FOLDER" -type f -name *."$EXTENSION"); do
+for i in $(find "$SHARED_FOLDER" -type f -name *."$EXTENSION"); do
 	DAY=$(echo "$i" | awk -F '/' '{print $8}' | awk -F '_' '{print $1}' | sort | uniq)
 	
 	if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
-			mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
+		mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
 	fi
 	
 	cd "$ARRANGED_FOLDER"/"$DAY"
 	
-	if ! ln -s "$i"; then
-			echo "[-] Error: Could not create symbolic links"
+	if ! ln -sfn "$i"; then
+        	echo "[-] Error: Could not create symbolic links"
 	fi
 	
 done
+
+exit 0
