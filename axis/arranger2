@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# TESTING
+
+SHARED_FOLDER="/share/"
+ARRANGED_FOLDER="/videos_by_day"
+
+
+function createSymlinks(){
+	for d in "$SHARED_FOLDER"/*;do	
+		if [ -d "d" ]; then	
+			if ! cd $SHARED_FOLDER/$d; then
+					echo '[-] the shared folder does not exist'
+					exit 1
+			fi
+
+			for i in $(find "$SHARED_FOLDER/$d" -type f -name *.mkv); do
+				DAY=$(echo "$i" | awk -F '/' '{print $8}' | awk -F '_' '{print $1}' | sort | uniq)
+				
+				if [ ! -d "$SHARED_FOLDER/$d/$ARRANGED_FOLDER/$DAY" ]; then
+					mkdir -p /"$SHARED_FOLDER/$d/$ARRANGED_FOLDER"/"$DAY"
+				fi
+				
+				cd "$SHARED_FOLDER/$d/$ARRANGED_FOLDER"/"$DAY"
+				
+				if ! ln -sfn "$i"; then
+						echo "[-] Error: Could not create symbolic links"
+				fi
+			done
+		fi
+}
+
+main(){
+	createSymlinks
+}
+
+main
+
+exit 0
