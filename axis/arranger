@@ -1,6 +1,7 @@
 #!/bin/bash
 
-# the shared folder on a TS series QNAP:
+# the shared folder on a TS series QNAP
+# the script utilises RSYNC -> double space needed
 SHARED_FOLDER="/share/testing/"
 
 #
