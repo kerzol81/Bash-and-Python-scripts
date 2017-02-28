@@ -2,6 +2,12 @@ import os
 import time
 import smtplib
 
+'''
+Experimental 
+Insert try, except,
+create functions etc..
+'''
+
 folder = "."
 before = dict([(f, None) for f in os.listdir(folder)])
 
