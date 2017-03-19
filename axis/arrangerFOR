@@ -16,9 +16,7 @@ DAY=$(echo "$i" | cut -d'/' -f10 | cut -d'_' -f1 | sort | uniq)
 	
 	cd "$ARRANGED_FOLDER"/"$DAY"
 
-	if ! ln -s "$i" >/dev/null 2>&1; then
-		echo "[-] Error: Could not create symbolic links"
-	fi
+	ln -s "$i" >/dev/null 2>&1
 done
 
 exit 0
