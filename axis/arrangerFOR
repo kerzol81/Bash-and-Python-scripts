@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# The script is intened for an Axis P7214 encoder
+# still buggy, 
+
+SD="/var/spool/storage/SD_DISK/"
+ARRANGED_FOLDER="/var/spool/storage/SD_DISK/videos_by_day"
+
+for i in $(find "$SD" -type f -name "*.mkv"); do
+
+DAY=$(echo "$i" | cut -d'/' -f10 | cut -d'_' -f1 | sort | uniq)
+	
+	if [ ! -d "/$ARRANGED_FOLDER/$DAY" ]; then
+		mkdir -p /"$ARRANGED_FOLDER"/"$DAY"
+	fi
+	
+	cd "$ARRANGED_FOLDER"/"$DAY"
+
+	if ! ln -s "$i" >/dev/null 2>&1; then
+		echo "[-] Error: Could not create symbolic links"
+	fi
+done
+
+exit 0
