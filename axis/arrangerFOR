@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# The script is intened for an Axis P7214 encoder
+# The script is intended for an Axis P7214 encoder
 # still buggy, 
 
 SD="/var/spool/storage/SD_DISK/"
