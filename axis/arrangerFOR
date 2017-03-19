@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # The script is intended for an Axis P7214 encoder
-# still buggy, 
+# needs further testing 
 
 SD="/var/spool/storage/SD_DISK/"
 ARRANGED_FOLDER="/var/spool/storage/SD_DISK/videos_by_day"
