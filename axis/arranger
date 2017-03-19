@@ -1,4 +1,6 @@
 #!/bin/bash
+# the script is inteneded to be run on QNAP
+# still buggy
 
 FOLDER=$1
 
