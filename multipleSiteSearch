@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+import webbrowser
+
+sites = [ 'site1', 'site2', 'site3', 'etc.' ]
+
+print('Multiple google search on sites:')
+for site in sites:
+    print(site)
+
+keyword = input('\nKeyword: ')
+
+for site in sites:
+    webbrowser.open_new_tab('http://www.google.com/search?btnG=1&q=%s' % keyword + ' ' + site)
