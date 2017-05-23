@@ -1,0 +1,10 @@
+#!/bin/bash
+
+checkRecquirements(){
+	programs=( "cdparanoia" "flac" )
+
+	for i in "${programs[@]}"
+	do
+	echo -n "$i"; [ -x "$(which "$i")" ] && echo ' [*] OK' || echo '[-] Not installed'
+	done
+}
