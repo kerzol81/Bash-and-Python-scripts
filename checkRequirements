@@ -1,7 +1,7 @@
 #!/bin/bash
 
 checkRecquirements(){
-	programs=( "cdparanoia" "flac" )
+	local programs=( "cdparanoia" "flac" )
 
 	for i in "${programs[@]}"
 	do
