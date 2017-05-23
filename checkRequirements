@@ -5,6 +5,6 @@ checkRecquirements(){
 
 	for i in "${programs[@]}"
 	do
-	echo -n "$i"; [ -x "$(which "$i")" ] && echo ' [*] OK' || echo '[-] Not installed'
+		[ -x "$(which "$i")" ] && echo "[*] "$i" OK" || echo "[-] Error: "$i" not istalled"
 	done
 }
