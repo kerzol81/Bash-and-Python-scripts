@@ -1,7 +1,7 @@
 from checksumdir import dirhash
 import time
 
-dir = 'C:\\Users\\zoli\\Desktop\\Akademia2'
+dir = 'C:\\Users\\zoli\\Desktop\\testdir'
 
 print('[+] Calculating MD5 hash on : ' + dir + ' directory, started at: ' + str(time.strftime("%Y-%m-%d %H:%M:%S")))
 
