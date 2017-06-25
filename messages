@@ -1,0 +1,17 @@
+import time
+
+def currenttime():
+    return ' ' + time.strftime("%Y-%m-%d %H:%M:%S") + ' '
+
+
+def printerror(message):
+    print('[-]' + currenttime() + message)
+
+
+def printsuccess(message):
+    print('[*]' + currenttime() + message)
+
+
+def printdaemonstarts(daemon_name):
+    print('[*]' + currenttime() + daemon_name + ' started')
+
