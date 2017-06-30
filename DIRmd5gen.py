@@ -23,7 +23,7 @@ def sha256(dir):
     sha256hash = dirhash(dir, 'sha256')
     sha256hash = '[+] SHA256 hash: ' + sha256hash[:8] + ' ' + sha256hash[8:16] + ' ' + sha256hash[16:24] + ' ' + sha256hash[24:32] + ' ' + sha256hash[32:40] + ' ' + sha256hash[40:48] + ' ' + sha256hash[48:56] + ' ' + sha256hash[56:64]
     print(sha256hash)
-    f = open(dir + '_hash_' + str(time.strftime("%Y-%m-%d_%H-%M")) + '.txt', 'w')
+    f = open(dir + '_hash_' + str(time.strftime("%Y-%m-%d_%H-%M-%S")) + '.txt', 'w')
     text = 'Directory: ' + dir + '\n' + sha256hash[4:] + '\nDate: ' + currenttime()
     f.write(text)
     f.close()
