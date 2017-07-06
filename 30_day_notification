@@ -1,0 +1,36 @@
+import os
+import time
+
+day_in_seconds = 86400
+
+folder = '/home/zoli/test/'
+
+
+def get_size(folder):
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(folder):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            total_size += os.path.getsize(fp)
+    return total_size
+
+
+def compare(folder):
+    count = 0
+    while True:
+        before = get_size(folder)
+        time.sleep(day_in_seconds)
+        after = get_size(folder)
+
+        if before == after or before >= after + 1024000000:
+            count += 1
+
+        if count == 30:
+            print('[*] 30 days have passed without writing data to ' + folder)
+            sendmail()
+            count = 0
+
+def sendmail():
+    print('[*] sending notification email')
+
+compare(folder)
