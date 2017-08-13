@@ -1,0 +1,19 @@
+import requests
+
+
+class Axis:
+
+    def serverReport(self, ip, username, password):
+        # API: http://<servername>/axis-cgi/admin/serverreport.cgi
+
+        response = requests.get("http://" + username + ":" + password + "@" + ip + "/axis-cgi/admin/serverreport.cgi")
+
+        if response.status_code == 404:
+            print('no such server')
+
+        else:
+            print(response)
+
+a = Axis()
+
+a.serverReport('10.0.0.10', 'root', 'root')
