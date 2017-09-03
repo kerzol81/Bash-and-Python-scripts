@@ -12,16 +12,15 @@ TO=$3
 
 function sendRestartMessage(){
 	local MESSAGE="restart $ID"
-	#echo mutt -s "$MESSAGE" "$TO"
+	echo mutt -s "$MESSAGE" "$TO"
 }
 
 function sendOKMessage(){
 	local MESSAGE="$ID is connected!"
-	#echo mutt -s "$MESSAGE" "$TO"	
+	echo mutt -s "$MESSAGE" "$TO"	
 }
 
 function writeToSyslog(){
-	# writes to syslog
 	logger "$ID" "is" "$STATE" 
 	}
 
@@ -31,7 +30,6 @@ function parseSyslog(){
 	
 	if [ "$disconnected" -gt 3 ];then
 		echo "sending email"
-	
 	fi
 }
 
@@ -47,15 +45,15 @@ do
 		STATE='disconnected'
 		writeToSyslog
 		
-    else  
+	else  
 		STATE='connected'
-		writeToSyslog
-       
-    fi
-    parseSyslog
-    sleep 900
+		writeToSyslog     
+	
+	fi
+	parseSyslog
+    	sleep 900
 done
-
+exit 0
 }
 
 main
