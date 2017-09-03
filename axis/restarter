@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -x
+
+AXIS_IP=$1
+ID=$2
+TO=$3
+
+# test it hourly
+# crontab -e
+#0 * * * * /path/to/file
+
+function sendRestartMessage(){
+	local MESSAGE="restart $ID"
+	#echo mutt -s "$MESSAGE" "$TO"
+}
+
+function sendOKMessage(){
+	local MESSAGE="$ID is connected!"
+	#echo mutt -s "$MESSAGE" "$TO"	
+}
+
+function writeToSyslog(){
+	# writes to syslog
+	logger "$ID" "is" "$STATE" 
+	}
+
+function parseSyslog(){
+	# searching for the sring "is disconnected" in last 60 minutes of syslog file
+	disconnected=$(awk "/^$(date --date="-60 min" "+%b %_d %H:%M")/{p++} p" /var/log/syslog | grep -c "$ID is disconnected")
+	
+	if [ "$disconnected" -gt 3 ];then
+		echo "sending email"
+	
+	fi
+}
+
+function main(){
+
+global STATE=''
+
+for i in $(seq 1 4);
+do
+	
+	if ! ping -c 1 "$AXIS_IP" >/dev/null 2>&1; then
+	
+		STATE='disconnected'
+		writeToSyslog
+		
+    else  
+		STATE='connected'
+		writeToSyslog
+       
+    fi
+    parseSyslog
+    sleep 900
+done
+
+}
+
+main
