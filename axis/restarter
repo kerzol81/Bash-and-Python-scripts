@@ -22,7 +22,7 @@ function sendOKMessage(){
 
 function writeToSyslog(){
 	logger "$ID" "is" "$STATE" 
-	}
+}
 
 function parseSyslog(){
 	# searching for the sring "is disconnected" in last 60 minutes of syslog file
