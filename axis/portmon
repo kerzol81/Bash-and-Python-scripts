@@ -5,16 +5,12 @@ FILE="/home/zoli/Desktop/ips"
 declare -a myarray
 let i=0
 while IFS=$'\n' read -r line_data; do
-    # Parse “${line_data}” to produce content 
-    # that will be stored in the array.
-    # (Assume content is stored in a variable 
-    # named 'array_element'.)
-    # ...
-    myarray[i]="${array_element}" # Populate array.
+
+    myarray[i]="${array_element}" 
     ((++i))
 done < $FILE
 
-PORT='22'
+PORT='554'
 
 for i in "${myarray[@]}";do
 
