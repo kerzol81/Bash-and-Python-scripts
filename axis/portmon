@@ -1,0 +1,28 @@
+#!/bin/bash
+
+FILE="/home/zoli/Desktop/ips"
+
+declare -a myarray
+let i=0
+while IFS=$'\n' read -r line_data; do
+    # Parse “${line_data}” to produce content 
+    # that will be stored in the array.
+    # (Assume content is stored in a variable 
+    # named 'array_element'.)
+    # ...
+    myarray[i]="${array_element}" # Populate array.
+    ((++i))
+done < $FILE
+
+PORT='22'
+
+for i in "${myarray[@]}";do
+
+	if ! $(nc -z "$i" "$PORT");then
+		echo "$i" "$PORT" "OFF"
+	else
+		echo "$i" "$PORT" "ON"
+	fi
+
+done
+
