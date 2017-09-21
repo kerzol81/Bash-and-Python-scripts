@@ -29,7 +29,7 @@ function writeOKToSyslog(){
 }
 	
 function writeERRORToSyslog(){
-	logger "$ID" "ERROR, the encoder has been restarted by VAPIX call" 
+	logger "$ID" "ERROR, the $AXIS_IP has been restarted by VAPIX call" 
 }
 
 function queryAPI(){
