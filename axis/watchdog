@@ -42,22 +42,19 @@ function restartAPI(){
 
 function main(){
 
-STATE=""
-
 queryAPI
 
-if [ "$?" -ne 0 ]; then
+if [ "$?" -ne 0 ]; then		
 	
-		STATE="disconnected"
-		echo "$ID" "state:" "$STATE"
-		sendRestartMessage
-		writeERRORToSyslog
-		restartAPI
+	echo "$ID" "state:" "disconnected"
+	sendRestartMessage
+	writeERRORToSyslog
+	restartAPI
 else
-		STATE="connected"
-		echo "$ID" "state:" "$STATE"
-		sendOKMessage
-		writeOKToSyslog
+	
+	echo "$ID" "state: OK"
+	sendOKMessage
+	writeOKToSyslog
 fi
 
 }
