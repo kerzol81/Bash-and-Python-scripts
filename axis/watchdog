@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# videoserver settings:
+AXIS_IP=$1
+USERNAME=$2
+PASSWORD=$3
+ID=$4
+
+# email settings:
+SMTP_SERVER=$5
+TO=$6
+FROM=$7
+EMAIL_USERNAME=$8
+
+function sendRestartMessage(){
+	local MESSAGE="$ID ERROR, the $AXIS_IP has been restarted by VAPIX call"
+	local SUBJECT="$ID ERROR"
+	swaks --to "$TO" --from "$FROM" --server "$SMTP_SERVER" --header "Subject: $SUBJECT" --body "$MESSAGE" >/dev/null
+}
+
+function sendOKMessage(){
+	local MESSAGE="$ID OK"
+	local SUBJECT="$ID OK"
+	swaks --to "$TO" --from "$FROM" --server "$SMTP_SERVER" --header "Subject: $SUBJECT" --body "$MESSAGE" >/dev/null
+}
+
+function writeOKToSyslog(){
+	logger "$ID" "OK" 
+}
+	
+function writeERRORToSyslog(){
+	logger "$ID" "ERROR, the encoder has been restarted by VAPIX call" 
+}
+
+function queryAPI(){
+	curl -m 3 -X GET http://"$USERNAME":"$PASSWORD"@"$AXIS_IP"/axis-cgi/videostatus.cgi?status=1,2,3,4 >/dev/null
+}
+
+function restartAPI(){
+	curl -m 3 -X GET http://"$USERNAME":"$PASSWORD"@"$AXIS_IP"/axis-cgi/restart.cgi
+}
+
+function main(){
+
+STATE=""
+
+queryAPI
+
+if [ "$?" -ne 0 ]; then
+	
+		STATE="disconnected"
+		echo "$ID" "state:" "$STATE"
+		sendRestartMessage
+		writeERRORToSyslog
+		restartAPI
+else
+		STATE="connected"
+		echo "$ID" "state:" "$STATE"
+		sendOKMessage
+		writeOKToSyslog
+fi
+
+}
+
+main
