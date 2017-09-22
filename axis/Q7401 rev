@@ -1,0 +1,7 @@
+binwalk Q7401_5_50_4_6.bin 
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+121808        0x1DBD0         HTML document header
+139098        0x21F5A         gzip compressed data, maximum compression, from Unix, last modified: 2017-05-30 13:01:22
+1835008       0x1C0000        JFFS2 filesystem, little endian
