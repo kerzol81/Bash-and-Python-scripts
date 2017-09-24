@@ -12,5 +12,7 @@ TODO via ssh:
 cat /proc/asound/cards
 arecord -l
 awk -F "[][]" '/dB/ {print $2}' <(amixer sget X)
+/axis-cgi/param.cgi?action=list
+/axis-cgi/param.cgi?action=list&group=Properties
 
 
