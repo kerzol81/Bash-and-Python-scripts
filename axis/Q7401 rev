@@ -8,5 +8,9 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 
 jefferson Q7401_5_50_4_6.bin -d Q7401Extracted
 
+TODO via ssh:
+cat /proc/asound/cards
+arecord -l
+awk -F "[][]" '/dB/ {print $2}' <(amixer sget X)
 
 
