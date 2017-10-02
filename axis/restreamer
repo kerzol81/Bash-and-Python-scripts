@@ -13,6 +13,8 @@ c='#std{access=http,mux=ts,dst=localhost:11111}'
 
 
 
-cvlc :ttl=128 rtsp://$axis_rtsp_url:554/ :sout=$c
+#cvlc :ttl=128 rtsp://$axis_rtsp_url:554/ :sout=$c
 
 #cvlc -vvv $test --sout=$b
+
+ffmpeg -i $axis_rtsp_url -c copy http://localhost:11111/feed1.ffm
