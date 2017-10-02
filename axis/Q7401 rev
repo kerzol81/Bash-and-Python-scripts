@@ -15,4 +15,7 @@ awk -F "[][]" '/dB/ {print $2}' <(amixer sget X)
 /axis-cgi/param.cgi?action=list
 /axis-cgi/param.cgi?action=list&group=Properties
 
+RTSP URL:
+rtsp://Camera-IP/axis-media/media.amp?codec=h264
+
 
