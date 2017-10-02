@@ -1,0 +1,18 @@
+#!/bin/bash
+set -x
+
+# test streams
+axis_rtsp_url="rtsp://username:password@axis_ip/axis-media/media.amp?codec=h264"
+test='rtsp://184.72.239.149/vod/mp4:BigBuckBunny_175k.mov'
+
+
+# tests
+a='#rtp{mux=ts,sdp=rtsp://127.0.0.1/:11111/live.sdp}'
+b='#standard{access=http,mux=ts,dst=localhost:11111}'
+c='#std{access=http,mux=ts,dst=localhost:11111}'
+
+
+
+cvlc :ttl=128 rtsp://$axis_rtsp_url:554/ :sout=$c
+
+#cvlc -vvv $test --sout=$b
