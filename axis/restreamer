@@ -18,3 +18,6 @@ c='#std{access=http,mux=ts,dst=localhost:11111}'
 #cvlc -vvv $test --sout=$b
 
 ffmpeg -i $axis_rtsp_url -c copy http://localhost:11111/feed1.ffm
+
+# 
+# https://www.codeproject.com/Articles/507218/Managed-Media-Aggregation-using-Rtsp-and-Rtp
