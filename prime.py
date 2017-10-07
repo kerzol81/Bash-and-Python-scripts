@@ -1,6 +1,5 @@
 import sys
 
-
 def isPrime(num):
     try:
         assert isinstance(num, int) and num > 0
@@ -21,5 +20,3 @@ def isPrime(num):
             else:
                 print('[*] ' + str(num) + ' is prime')
                 break
-
-isPrime(11)
