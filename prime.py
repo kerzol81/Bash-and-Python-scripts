@@ -12,7 +12,7 @@ def isPrime(num):
         print('[-] 1 or 0 ar not primes')
 
     else:
-        for a in range(2, num):
+        for a in range(2, int(num ** 0.5)):
 
             if num % a == 0:
                 print('[-] ' + str(num) + ' is not prime')
