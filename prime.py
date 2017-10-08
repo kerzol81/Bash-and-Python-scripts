@@ -14,12 +14,15 @@ def isPrime(num):
 
     if num == 0 or num == 1:
         print('[-] 1 or 0 ar not primes')
+        sys.exit(0)
 
     elif num == 2:
         print('[*] ' + str(num) + ' is prime')
+        sys.exit(0)
 
     elif num % 2 == 0:
         print('[-] is not prime')
+        sys.exit(0)
 
     else:
 
@@ -31,5 +34,3 @@ def isPrime(num):
             else:
                 print('[*] is prime')
                 break
-
-
