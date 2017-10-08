@@ -17,7 +17,7 @@ def isPrime(num):
 
     else:
 
-        for a in range(3, int(num ** 0.5), 2):
+        for a in range(3, int(num ** 0.5) + 1, 2):
 
             if num % a == 0:
                 print('[-] ' + str(num) + ' is not prime')
