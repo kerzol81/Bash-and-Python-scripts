@@ -1,15 +1,16 @@
 class PlaneFigure(object):
 
-    def __init__(self, name='default'):
+    def __init__(self, name='default', color='black'):
         self.name = name
+        self.color = color
 
 
 class Circle(PlaneFigure):
-    # the class attributes
-    kind = 'plane figure'
+
+    kind = 'circle'
     pi = 3.1416
 
-    def __init__(self, radius=1, color='black'):
+    def __init__(self, radius=1):
         PlaneFigure.__init__(self)
         self.radius = radius
         self.color = color
@@ -37,3 +38,4 @@ class Triangular(PlaneFigure):
 
     def perimeter(self):
         return self.a + self.b + self.c
+    
