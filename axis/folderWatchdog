@@ -1,0 +1,25 @@
+import os
+import time
+
+rootdir = '.'
+
+def examine():
+
+    while True:
+
+        try:
+            folders = next(os.walk(rootdir))[1]
+        except StopIteration:
+            print('[-] No such folder')
+            break
+
+        for folder in folders:
+            now = os.path.getsize(folder)
+            time.sleep(5)
+            after = os.path.getsize(folder)
+
+            if now == after:
+                message = folder + ' Recording stopped '
+                print(message)
+            else:
+                continue
