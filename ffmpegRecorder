@@ -5,7 +5,6 @@ USERNAME=$2
 PASSWORD=$3
 DURATION=$4
 
-
 STREAM="rtsp://$USERNAME:$PASSWORD@$IP/axis-media/media.amp"
 
 ffmpeg -i $STREAM -c copy -map 0 -f segment -segment_time $DURATION -segment_format mp4 "$(date +%Y-%m_%d___%H%M%S)__id_%2d.mp4"
