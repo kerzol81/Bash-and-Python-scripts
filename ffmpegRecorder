@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 
 IP='10.0.0.100'
 USERNAME='root'
@@ -13,10 +12,13 @@ STREAM="rtsp://$USERNAME:$PASSWORD@$IP/axis-media/media.amp"
 
 
 check(){
-	if ! ffmpeg -v grep && ffprobe -v grep; then
-		echo '[-] install ffmpeg and ffprobe!'
-	elif ! ffmpeg -v grep && ffprobe -v grep; then
-		echo '[-] install ffmpeg and ffprobe!'	
+	if ffmpeg -v grep; then
+		echo '[-] install ffmpeg!'
+		exit 1
+	elif ffprobe -i $STREAM 2 > /dev/null;then
+		echo '[-] stream error'
+		exit 2
+	
 	fi
 }
 
