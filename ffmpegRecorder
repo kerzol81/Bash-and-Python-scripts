@@ -8,16 +8,34 @@ PASSWORD='root'
 ID='garden'
 FPS=15
 DURATION=10
-FOLDER=/home/$USER/recordings/
+FOLDER="/home/$USER/recordings/$ID"
 STREAM="rtsp://$USERNAME:$PASSWORD@$IP/axis-media/media.amp"
 
-while true
-do
 
-	TODAY=$(date +%Y-%m-%d)
+check(){
+	if ! ffmpeg -v grep && ffprobe -v grep; then
+		echo '[-] install ffmpeg and ffprobe!'
+	elif ! ffmpeg -v grep && ffprobe -v grep; then
+		echo '[-] install ffmpeg and ffprobe!'	
+	fi
+}
 
-	mkdir -p "$FOLDER/$TODAY"
+record(){	
+	while true
+		do
 
-	ffmpeg -i $STREAM -r $FPS -t $DURATION "/$FOLDER/$TODAY/$(date +%Y-%m-%d_%H%M%S_$ID).mp4"
+			TODAY=$(date +%Y-%m-%d)
 
-done
+			mkdir -p "$FOLDER/$TODAY"
+
+			ffmpeg -i $STREAM -r $FPS -t $DURATION "/$FOLDER/$TODAY/$(date +%Y-%m-%d_%H%M%S_$ID).mp4"
+
+		done
+}
+
+main(){
+	check
+	record
+}
+
+main
