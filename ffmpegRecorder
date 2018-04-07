@@ -1,20 +1,23 @@
 #!/bin/bash
+set -x
 
-IP=$1
-USERNAME=$2
-PASSWORD=$3
-DURATION=$4
+IP='10.0.0.100'
+USERNAME='root'
+PASSWORD='root'
 
+ID='garden'
+FPS=15
+DURATION=10
+FOLDER=/home/$USER/recordings/
 STREAM="rtsp://$USERNAME:$PASSWORD@$IP/axis-media/media.amp"
 
-if ! ffmpeg -v grep && ffprobe -v grep; then
-	echo '[-] install ffmpeg and ffprobe!'
+while true
+do
 
-elif [ "$#" -ne 4 ]; then
-    echo '[-] Enter 4 arguments: <IP> <USERNAME> <PASSWORD> <DURATION>'
+	TODAY=$(date +%Y-%m-%d)
 
-elif ! ffprobe -i "$STREAM" 2 > /dev/null; then
+	mkdir -p "$FOLDER/$TODAY"
 
-ffmpeg -i "$STREAM" -c copy -map 0 -f segment -segment_time "$DURATION" -segment_format mp4 "$(date +%Y-%m_%d___%H%M%S)__id_%2d.mp4"
+	ffmpeg -i $STREAM -r $FPS -t $DURATION "/$FOLDER/$TODAY/$(date +%Y-%m-%d_%H%M%S_$ID).mp4"
 
-fi
+done
