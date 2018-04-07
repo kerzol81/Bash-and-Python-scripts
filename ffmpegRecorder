@@ -7,7 +7,7 @@ DURATION=$4
 
 STREAM="rtsp://$USERNAME:$PASSWORD@$IP/axis-media/media.amp"
 
-if ! ffmpeg -v grep || ffprobe -v grep; then
+if ! ffmpeg -v grep && ffprobe -v grep; then
 	echo '[-] install ffmpeg and ffprobe!'
 
 elif [ "$#" -ne 4 ]; then
