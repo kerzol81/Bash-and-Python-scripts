@@ -7,4 +7,11 @@ DURATION=$4
 
 STREAM="rtsp://$USERNAME:$PASSWORD@$IP/axis-media/media.amp"
 
-ffmpeg -i $STREAM -c copy -map 0 -f segment -segment_time $DURATION -segment_format mp4 "$(date +%Y-%m_%d___%H%M%S)__id_%2d.mp4"
+if [ "$#" -ne 4 ]; then
+    echo '[-] Enter 4 arguments: <IP> <USERNAME> <PASSWORD> <DURATION>'
+
+elif ! ffprobe -i "$STREAM" 2 > /dev/null; then
+
+ffmpeg -i "$STREAM" -c copy -map 0 -f segment -segment_time "$DURATION" -segment_format mp4 "$(date +%Y-%m_%d___%H%M%S)__id_%2d.mp4"
+
+fi
