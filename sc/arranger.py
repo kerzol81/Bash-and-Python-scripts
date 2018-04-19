@@ -17,15 +17,19 @@ def arrange(folder='.'):
     """ moves files into daily folders """
     if check(folder):
         os.chdir(folder)
-        for file in os.listdir(folder):
-            if 'wav' in file.lower():
-                day = file.split('_')[0]
-                if not os.path.exists(day):
-                    os.mkdir(day)
-                    shutil.move(file, day)
-                else:
-                    shutil.move(file, day)
-        print('[*] {} Done.'.format(folder))
+        if len(os.listdir(folder)) is 0:
+            print('[!] {} is empty.'.format(folder))
+        else:
+            for file in os.listdir(folder):
+                if 'wav' in file.lower():
+                    day = file.split('_')[0]
+                    if not os.path.exists(day):
+                        os.mkdir(day)
+                        shutil.move(file, day)
+                    else:
+                        shutil.move(file, day)
+
+                print('[*] {} Done.'.format(folder))
 
 
 def arrange_all_folders(folders):
