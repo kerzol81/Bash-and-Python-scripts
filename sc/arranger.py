@@ -28,7 +28,10 @@ def arrange(folder='.'):
         print('[*] {} Done.'.format(folder))
 
 
+def arrange_all_folders(folders):
+    for folder in folders:
+        arrange(folder)
+    print('[*] Done.')
 
-for f in sc_folders:
-    arrange(f)
-    
+
+arrange_all_folders(sc_folders)
