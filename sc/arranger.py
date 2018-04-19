@@ -1,7 +1,7 @@
 import os
 import shutil
 
-sc_folders = [r'/home/zoli/sc1', r'/home/zoli/sc3']
+sc_folders = [r'/home/zoli/sc1', r'/home/zoli/sc2', r'/home/zoli/sc3 ]
 
 
 def check(folder='.'):
