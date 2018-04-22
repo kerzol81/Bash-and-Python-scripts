@@ -1,5 +1,6 @@
 import os
 import shutil
+import datetime
 
 sc_folders = [r'/home/zoli/sc1', r'/home/zoli/sc2', r'/home/zoli/sc3 ]
 
@@ -23,6 +24,7 @@ def arrange(folder='.'):
             for file in os.listdir(folder):
                 if 'wav' in file.lower():
                     day = file.split('_')[0]
+                    day = datetime.datetime.strptime(day, '%y%m%d').strftime('%Y-%m-%d')
                     if not os.path.exists(day):
                         os.mkdir(day)
                         shutil.move(file, day)
