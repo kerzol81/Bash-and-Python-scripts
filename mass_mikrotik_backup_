@@ -33,7 +33,7 @@ for ROUTER in "$ROUTERS"; do
 		ssh "$USER"@"$ROUTER" "/system backup save name=backup_${FILENAME}" &>/dev/null
 		sleep 1
 		scp -q ""$USER"@""$ROUTER":/backup_${FILENAME}.backup $BACKUPDIR/$TODAY/$ROUTER/
-		ssh ""$USER"@""$ROUTER" "/file remove export_${FILENAME}.backup"
+		ssh ""$USER"@"$ROUTER" "/file remove export_${FILENAME}.backup"
 
 		find "$BACKUPDIR" -mindepth 1 -maxdepth 1 -type d -mtime +"$ROTATE" -exec rm -rf "{}" \;
 	
