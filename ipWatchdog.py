@@ -2,9 +2,7 @@ from requests import get
 from time import sleep
 import smtplib
 
-freq = 60 * 10  # sec
-
-
+freq = 1200  # sec
 
 def getExternalIP():
     try:
