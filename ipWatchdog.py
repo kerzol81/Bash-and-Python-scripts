@@ -1,5 +1,6 @@
 """
 A friend of mine has asked me to write a quick solution to check if the his external IP has changed or not.
+If the IP has changed, he'll recevie an email with the changed IP's URL to his home DVR.
 It works, however it is a dirty and fast solution without much error checking.
 """
 
