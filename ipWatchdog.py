@@ -1,3 +1,8 @@
+"""
+A friend of mine has asked me to write a quick solution to check if the his external IP has changed or not.
+It works, however it is a dirty and fast solution without much error checking.
+"""
+
 from requests import get
 from time import sleep
 import smtplib
