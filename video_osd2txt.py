@@ -13,6 +13,7 @@ def getFirstFrame(videofile):
 
 
 def getOSD(frame):
+    """ the OSD is on the left at the bottom"""
     img = cv2.imread(frame, 0)
     osdheight = 30
     osdwidth = 400
@@ -20,16 +21,12 @@ def getOSD(frame):
     imgWidth = img.shape[1]
 
     osd = img[imgHeight-osdheight:imgHeight, osdwidth:imgWidth]
-    #cv2.imshow('test', osd)
-    #cv2.waitKey(2000)
     cv2.imwrite('osd.jpg', osd)
 
 
 def getDate(osd):
     img = cv2.imread(osd, 0)
     ret, image = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
-    #cv2.imshow('test', image)
-    #cv2.waitKey(2000)
     config = '--psm 10 --oem 1 -c tessedit_char_whitelist=-:0123456789'
     text = pytesseract.image_to_string(image, config=config)
     return text
