@@ -32,4 +32,4 @@ def getDate(osd):
     #cv2.waitKey(2000)
     config = '--psm 10 --oem 1 -c tessedit_char_whitelist=-:0123456789'
     text = pytesseract.image_to_string(image, config=config)
-    print(text)
+    return text
