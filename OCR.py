@@ -2,9 +2,9 @@ import cv2
 import pytesseract
 
 """
-How to recognise date and time from security cameras OSD
+How to recognise date&time from a security camera's OnScreenDisplay
+In this case the OSD was burnt into the bottom-right corner
 """
-
 
 def getFirstFrame(videofile):
     vid = cv2.VideoCapture(videofile)
@@ -14,7 +14,6 @@ def getFirstFrame(videofile):
         return True
     else:
         return False
-
 
 def getOSD(frame):
     img = cv2.imread(frame, 0)
@@ -27,8 +26,6 @@ def getOSD(frame):
     #cv2.imshow('test', osd)
     #cv2.waitKey(2000)
     cv2.imwrite('osd.jpg', osd)
-
-
 
 def getDate(osd):
     img = cv2.imread(osd, 0)
