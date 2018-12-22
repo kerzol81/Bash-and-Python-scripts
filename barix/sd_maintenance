@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -x
 SD_CARD="/mnt/data"
-LIMIT=60
+LIMIT=95
 LOGDIR="/mnt/data/logs"
 LOGFILE="/mnt/data/logs/$(date +%Y-%m-%d).txt"
 
