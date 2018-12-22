@@ -22,7 +22,7 @@ logging(){
 	if [ ! -f "$LOGFILE" ]; then
 		touch "$LOGFILE"
 	fi
-	echo $1 >> "$LOGFILE"
+	echo "$1" >> "$LOGFILE"
 	}
 
 removeOldestFile(){
