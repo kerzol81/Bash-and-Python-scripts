@@ -1,0 +1,46 @@
+#!/bin/bash
+#set -x
+SD_CARD="/mnt/data"
+LIMIT=60
+LOGDIR="/mnt/data/logs"
+LOGFILE="/mnt/data/logs/$(date +%Y-%m-%d).txt"
+
+getPercentageOfSD_CARD(){
+	PERCENTAGE=$(df -h | grep "$SD_CARD" | awk '{ print $5}' | sed 's/%//')
+
+	INT='^[0-9]+$'
+
+	if ! [[ "$PERCENTAGE" =~ $INT ]] ; then
+		echo "[!] Error, Could not calculate" >&2; exit 2
+	else
+		echo "$PERCENTAGE"
+	fi
+}
+
+logging(){
+		mkdir -p "$LOGDIR"		
+		if [ ! -f "$LOGFILE" ]; then
+			touch "$LOGFILE"
+		fi
+		echo "$1" >> "$LOGFILE"
+	}
+
+removeOldestFile(){
+	OLDEST_FILE=$(find $SD_CARD -type f | sort | head -n 1)
+	rm -rf "$OLDEST_FILE"
+	logging "$(date +"%Y-%m-%d %H:%M") $OLDEST_FILE removed"	
+	}
+	
+
+main(){
+	if [ ! -d "$SD_CARD" ]; then
+		echo "[!] Does not exist" >&2; exit 1
+	fi
+
+	if [ "$(getPercentageOfSD_CARD)" -gt "$LIMIT" ]; then
+		removeOldestFile
+		
+	fi
+}
+
+main
