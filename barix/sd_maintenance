@@ -2,7 +2,7 @@
 #set -x
 SD_CARD="/mnt/data"
 LIMIT=95
-LOGDIR="/mnt/data/logs"
+LOGDIR="/mnt/data/logs/removed_files/"
 LOGFILE="/mnt/data/logs/$(date +%Y-%m-%d).txt"
 
 getPercentageOfSD_CARD(){
