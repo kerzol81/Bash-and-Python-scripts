@@ -31,7 +31,6 @@ removeOldestFile(){
 	logging "$(date +"%Y-%m-%d %H:%M") $OLDEST_FILE removed"	
 	}
 	
-
 main(){
 	if [ ! -d "$SD_CARD" ]; then
 		echo "[!] Does not exist" >&2; exit 1
