@@ -18,11 +18,11 @@ getPercentageOfSD_CARD(){
 }
 
 logging(){
-		mkdir -p "$LOGDIR"		
-		if [ ! -f "$LOGFILE" ]; then
-			touch "$LOGFILE"
-		fi
-		echo "$1" >> "$LOGFILE"
+	mkdir -p "$LOGDIR"		
+	if [ ! -f "$LOGFILE" ]; then
+		touch "$LOGFILE"
+	fi
+	echo $1 >> "$LOGFILE"
 	}
 
 removeOldestFile(){
