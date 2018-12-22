@@ -3,7 +3,7 @@
 SD_CARD="/mnt/data"
 LIMIT=95
 LOGDIR="/mnt/data/logs/removed_files/"
-LOGFILE="/mnt/data/logs/$(date +%Y-%m-%d).txt"
+LOGFILE="$LOGDIR/$(date +%Y-%m-%d).txt"
 
 getPercentageOfSD_CARD(){
 	PERCENTAGE=$(df -h | grep "$SD_CARD" | awk '{ print $5}' | sed 's/%//')
