@@ -6,7 +6,7 @@ import sys
 def download(ip, username, password, device_id='TEST'):
     """
     Downloads files from server into daily folders --> the day when the file was created
-     
+
     :param ip: '10.0.0.10'
     :param username: 'root'
     :param password: 'root'
@@ -20,7 +20,7 @@ def download(ip, username, password, device_id='TEST'):
         os.makedirs(local_path)
     os.chdir(local_path)
     try:
-        print('[*] Connecting to ID: {} via FTP'.format(id))
+        print('[*] FTP into ID: {}'.format(device_id))
         ftp = FTP(ip)
         ftp.login(username, password)
         ftp.cwd(remote_path)
@@ -29,6 +29,11 @@ def download(ip, username, password, device_id='TEST'):
         remote_files.remove('..')
         remote_files.remove('.tmp')
         data = {}
+
+        if len(remote_files) == 0:
+            print('[-] There are no files the device')
+            ftp.quit()
+
         for file in sorted(remote_files):
             data['remote_filename'] = file
             data['file_creation_day'] = str(ftp.sendcmd("MDTM {}".format(file))).split(' ')[1][0:8]
@@ -54,7 +59,3 @@ def find_local(file):
     for root, dirs, files in os.walk('.'):
         if file in files:
             return os.path.join(root, file)
-
-# TODO
-# logging
-# file comparision before downloading
