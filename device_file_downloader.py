@@ -6,8 +6,7 @@ import sys
 def download(ip, username, password, device_id='TEST'):
     """
     Downloads files from server into daily folders --> the day when the file was created
-    
-    
+     
     :param ip: '10.0.0.10'
     :param username: 'root'
     :param password: 'root'
