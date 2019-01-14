@@ -1,7 +1,7 @@
 from ftplib import FTP
 import os
 import sys
-
+import time
 
 def download(ip, username, password, device_id='TEST'):
     """
@@ -16,9 +16,7 @@ def download(ip, username, password, device_id='TEST'):
     delete_remote_files = True   # set it to false to keep the remote files on server
     remote_path = "/data/"
     local_path = device_id
-    if not os.path.exists(local_path):
-        os.makedirs(local_path)
-    os.chdir(local_path)
+
     try:
         print('[*] FTP into ID: {}'.format(device_id))
         ftp = FTP(ip)
@@ -33,13 +31,15 @@ def download(ip, username, password, device_id='TEST'):
         if len(remote_files) == 0:
             print('[-] There are no files the device')
             ftp.quit()
+        if not os.path.exists(local_path):
+            os.makedirs(local_path)
 
         for file in sorted(remote_files):
             data['remote_filename'] = file
             data['file_creation_day'] = str(ftp.sendcmd("MDTM {}".format(file))).split(' ')[1][0:8]
             if not os.path.exists(data['file_creation_day']):
                 os.makedirs(data['file_creation_day'])
-            os.chdir(data['file_creation_day'])
+            os.chdir(device_id + '/' + data['file_creation_day'])
 
             if find_local(data['remote_filename']) is None:
                 print('[+] Downloading: {} > {}'.format(data['remote_filename'], data['file_creation_day']))
