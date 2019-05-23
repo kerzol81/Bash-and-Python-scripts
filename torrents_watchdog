@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DEST='/run/user/1000/gvfs/afp-volume:host=synology.local,user=zoli,volume=TORRENTS'
+SRC="/home/$USER/Downloads"
+
+if [ -e $DEST ];then
+	cd "$SRC" || exit 1
+	for i in *.torrent;do
+		mv "$i" "$DEST" 2>/dev/null
+	done
+else
+	exit 1
+fi
+
+exit 0
