@@ -14,7 +14,7 @@ do
                 	systemctl stop openvpn@$i.service
                 	sleep 5
                 	systemctl start openvpn@$i.service
-                	logger "Watchdog: $i island has been restarted"
+                	logger "OpenVPN watchdog: $i island has been restarted"
         	fi
 	done
 
