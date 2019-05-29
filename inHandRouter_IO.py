@@ -36,3 +36,15 @@ def get_logo():
     a = "http://192.168.144.1/products/global/English-logo.png"
     r = requests.get(a)
     print(r.status_code)
+    
+## TEST:
+import time
+
+while True:
+    time.sleep(2)
+    inhand_io_on('192.168.2.1', 'adm', '123456')
+    time.sleep(2)
+    inhand_io_off('192.168.2.1', 'adm', '123456')
+
+## TODO
+# finish get_logo()
