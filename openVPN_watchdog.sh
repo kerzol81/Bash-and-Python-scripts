@@ -8,7 +8,7 @@ WAIT=300
 while true;
 do
 	for i in "${ISLANDS[@]}";do
-		STATUS=$(service openvpn@$i status | grep -o "inactive")
+		STATUS=$(systemctl status openvpn@$i | grep -o "inactive")
 
         	if [ "$STATUS" == "inactive" ];then
                 	systemctl stop openvpn@$i.service
