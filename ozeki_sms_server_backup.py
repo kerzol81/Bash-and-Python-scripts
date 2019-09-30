@@ -13,7 +13,6 @@ maxdays = 3
 def get_time():
     return time.strftime("%Y-%m-%d")
 
-
 def get_exact_time():
     return time.strftime("%Y-%m-%d %H:%M:%S")
 
