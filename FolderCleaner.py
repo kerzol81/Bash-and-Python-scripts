@@ -7,7 +7,7 @@ import datetime
 class Logger:
     logging.basicConfig(filename=datetime.datetime.today().strftime("%Y_%m_%d.log"), 
                         format='%(asctime)s %(message)s', 
-                        datefmt='%Y-%m-%d %I:%M:%S',  
+                        datefmt='%Y-%m-%d %H:%M:%S',  
                         level=logging.INFO)
     @staticmethod
     def log2file(message):
