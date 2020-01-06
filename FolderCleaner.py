@@ -5,7 +5,10 @@ import datetime
 
 
 class Logger:
-    logging.basicConfig(filename=datetime.datetime.today().strftime("%Y_%m_%d.log"), format='%(asctime)s %(message)s', datefmt='%Y-%m-%d %I:%M:%S',  level=logging.INFO)
+    logging.basicConfig(filename=datetime.datetime.today().strftime("%Y_%m_%d.log"), 
+                        format='%(asctime)s %(message)s', 
+                        datefmt='%Y-%m-%d %I:%M:%S',  
+                        level=logging.INFO)
     @staticmethod
     def log2file(message):
         logging.info(message)
@@ -63,10 +66,3 @@ class FolderCleaner:
         for directory in self._directories:
             Logger.log2file('{} folder deleted'.format(directory))
             os.rmdir(directory)
-
-
-f = FolderCleaner("/home/kerzol/testing/", 10)
-f.delete_files()
-f.delete_folders()
-
-
