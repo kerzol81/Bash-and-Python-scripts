@@ -1,0 +1,8 @@
+#!/bin/bash
+# run with cron
+
+if ! ping -c 1 8.8.8.8 > /dev/null; then
+    nmcli radio wifi off
+    nmcli radio wifi on
+    logger "wlan was restarted"
+fi
