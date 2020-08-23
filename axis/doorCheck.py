@@ -9,7 +9,7 @@ def check_door():
     querystring = {"check": "1"}
 
     payload = ""
-    headers = {'authorization': 'Basic cm9vdDp6Z2FyZGVuMjAxOQ=='}
+    headers = {'authorization': 'Basic xxxxxxxx=='}
 
     response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
 
