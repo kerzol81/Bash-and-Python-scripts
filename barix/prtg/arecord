@@ -1,4 +1,6 @@
 #!/bin/sh
+# 
+# /var/prtg/scripts/arecord
 
 PID=$(pgrep arecord)
 
