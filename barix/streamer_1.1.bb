@@ -1,4 +1,4 @@
-SUMMARY = "HTTP audio streaming"
+SUMMARY = "HTTP Audio Streaming"
 LICENSE = "CLOSED"
 LIC_FILES_CHKSUM = ""
 
