@@ -1,0 +1,44 @@
+#!/bin/bash
+# Author: KZ
+# Date: 19.11.2019
+# Description: record audio segments, set RATE, DURATION from GUI
+# Start with cron @reboot
+
+if [ ! -e /home/root/.asoundrc ];then
+cat > /home/root/.asoundrc <<EOF
+
+pcm.mixin {
+	type dsnoop
+        ipc_key 5978293
+        ipc_key_add_uid yes
+	slave {
+		pcm "hw:0,0"
+		channels 2
+		period_size 1024
+		buffer_size 4096
+		rate 44100
+		periods 0
+		period_time 0
+	}
+	bindings {
+		0 0
+		0 1
+	}
+}
+EOF
+fi
+
+sleep 1
+
+FOLDER=$(uci get application.audio.recording_path)
+MAC_ADDRESS=$(sed 's/://g' /sys/class/net/eth0/address)
+
+while true; do
+	mkdir -p "$FOLDER"
+	RATE=$(uci get application.audio.recording_sample)
+	DURATION=$(uci get application.audio.duration)	
+	DAY=$(date +%Y-%m-%d)
+	mkdir -p "$FOLDER/$DAY"
+	FILENAME=$(date +%Y-%m-%d__%H_%M__"$RATE"_"$MAC_ADDRESS")
+	arecord -f cd -r "$RATE" -d "$DURATION" "$FOLDER"/"$DAY"/"$FILENAME".wav -D dsnoop -Dplug:dsnoop;
+done
