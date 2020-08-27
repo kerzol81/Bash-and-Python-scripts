@@ -1,0 +1,33 @@
+#!/bin/bash
+# Author: KZ
+# Date: 19.11.2019
+# Description: http audio streaming
+# Start with cron @reboot
+
+if [ ! -e /home/root/.asoundrc ];then
+cat > /home/root/.asoundrc <<EOF
+
+pcm.mixin {
+	type dsnoop
+        ipc_key 5978293
+        ipc_key_add_uid yes
+	slave {
+		pcm "hw:0,0"
+		channels 2
+		period_size 1024
+		buffer_size 4096
+		rate 44100
+		periods 0
+		period_time 0
+	}
+	bindings {
+		0 0
+		0 1
+	}
+}
+EOF
+fi
+
+sleep 1
+
+cvlc -vvv alsa://dsnoop --sout '#standard{access=http,mux=ogg, dst=:5555}'
