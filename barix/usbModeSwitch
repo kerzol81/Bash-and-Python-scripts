@@ -2,4 +2,9 @@
 
 #HUAWEI
 
-usb_modeswitch -V 0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $1}') 0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $2}') -H
+#!/bin/bash
+
+DefaultVendor=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $1}')
+DefaultProduct=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $2}')
+
+usb_modeswitch -v "$DefaultVendor" -p "$DefaultProduct"	-W
