@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -x
+
+if ! ffprobe http:localhost:8888/audio_low;then
+
+        echo "kicking..."
+        kill $(ps ux | grep ffserver | awk '{print $2}') 2>/dev/null
+        sleep 2
+        ./usr/bin/ff_streamer &
+fi
