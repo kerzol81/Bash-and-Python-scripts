@@ -1,0 +1,11 @@
+#!/bin/bash
+# 03.09.2020 KZ
+
+set -x
+
+while true;do
+	kill $(ps ux | grep ffserver | awk '{print $2}') 2>/dev/null
+        ffserver -f /etc/ffserver.conf &
+        ffmpeg -f alsa -i plug:dsnoop -acodec pcm_s16le -shortest http://localhost:8888/a$
+        sleep 1
+done
