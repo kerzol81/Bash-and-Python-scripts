@@ -1,0 +1,49 @@
+#!/bin/bash
+# 10.09.2020 KZ
+
+streaming_port=$(uci get application.audio.ffserver_http_streaming_port)
+
+audio1_sample_rate=$(uci get application.audio.ffserver_streaming_audio1_sample_rate)
+audio1_bit_rate=$(uci get application.audio.ffserver_streaming_audio1_bit)
+
+audio2_sample_rate=$(uci get application.audio.ffserver_streaming_audio2_sample_rate)
+audio2_bit_rate=$(uci get application.audio.ffserver_streaming_audio2_bit)
+
+customLog=$(uci get application.audio.ffserver_log)
+
+cat > /etc/ffserver.conf <<EOF
+HTTPPort ${streaming_port}
+
+HTTPBindAddress 0.0.0.0
+MaxHTTPConnections 10
+MaxClients 10
+MaxBandwidth 4096
+
+CustomLog ${customLog}
+
+<Feed audio.ffm>
+        File /tmp/audio.ffm
+        FileMaxSize 32M
+</Feed>
+
+<Stream audio_low>
+        Feed audio.ffm
+        Format wav
+        AudioCodec pcm_s16le
+        AudioBitRate ${audio1_bit_rate}
+        AudioChannels 2
+        AudioSampleRate ${audio1_sample_rate}
+        NoVideo
+        StartSendOnKey
+</Stream>
+
+<Stream audio>
+	Feed audio.ffm
+        Format wav
+        AudioCodec pcm_s16le
+        AudioBitRate ${audio2_bit_rate}
+        AudioChannels 2
+        AudioSampleRate ${audio2_sample_rate}
+        NoVideo
+        StartSendOnKey
+</Stream>
