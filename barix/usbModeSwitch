@@ -1,9 +1,14 @@
-#!/bin/bash
+#!/bin/sh
 
 #HUAWEI
 
 DefaultVendor=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $1}')
 DefaultProduct=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $2}')
 
-usb_modeswitch -v "$DefaultVendor" -p "$DefaultProduct"	-W
+if [ "$DefaultVendor" = "0x" ] || [ "$DefaultProduct" = "0x" ];then
+        exit 1
+fi
 
+/usr/sbin/usb_modeswitch -J -v "$DefaultVendor" -p "$DefaultProduct" > /dev/null 2>&1
+
+exit 0
