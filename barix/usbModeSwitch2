@@ -18,9 +18,8 @@ if ! usb_modeswitch --default-vendor "$DefaultVendor" --default-product "$Defaul
       exit 2
 fi
 
-
 # Test web interface
-if curl --max-time 3 "http://192.168.8.1" --silent &>/dev/null; then
+if curl --max-time 3 "http://192.168.8.1" --silent; then
     echo 'Connection to web interface successful'
 else
     echo 'Unable to connect to web interface. Exiting'
@@ -86,13 +85,13 @@ status=$(curl "http://192.168.8.1/api/monitoring/status" \
      --insecure \
      --silent |\
      grep '<ConnectionStatus>' | cut -b 19-21)
-if [[ $status -eq 900 ]]; then
+if [ "$status" -eq 900 ]; then
     echo 'Status 900 (Connecting)'
-elif [[ $status -eq 901 ]]; then
+elif [ "$status" -eq 901 ]; then
     echo 'Status 901 (Connected)'
-elif [[ $status -eq 901 ]]; then
+elif [ "$status" -eq 901 ]; then
     echo 'Status 902 (Disconnected)'
-elif [[ $status -eq 901 ]]; then
+elif [ "$status" -eq 901 ]; then
     echo 'Status 903 (Disconnecting)'
 else
     echo 'Unknown status'
