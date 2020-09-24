@@ -10,7 +10,7 @@ DefaultVendor=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print
 DefaultProduct=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{print $2}')
 
 if [ "$DefaultVendor" = "0x" ] || [ "$DefaultProduct" = "0x" ];then
-	echo '[-] Missing USB device'
+	echo '[-] No device found'
 	exit 1 
 fi
 
@@ -20,19 +20,19 @@ fi
 
 # Test web interface
 if curl --max-time 3 "http://192.168.8.1" --silent; then
-    echo 'Connection to web interface successful'
+    echo '[+] Connection to web interface successful'
 else
-    echo 'Unable to connect to web interface. Exiting'
+    echo '[-] Unable to connect to web interface. Exiting'
     exit 3
 fi
 
 # Obtain SessionID and __RequestVerificationToken
-SesTokInfo=$(curl "http://192.168.8.1/api/webserver/SesTokInfo" --silent)
+SesTokInfo=$(curl --max-time 3 "http://192.168.8.1/api/webserver/SesTokInfo" --silent)
 SessionID=$(echo "$SesTokInfo" | grep "SessionID=" | cut -b 20-147)
 __RequestVerificationToken=$(echo "$SesTokInfo" | grep "TokInfo" | cut -b 10-41)
 
 # Enable data
-curl "http://192.168.8.1/api/dialup/mobile-dataswitch" \
+curl --max-time 3 "http://192.168.8.1/api/dialup/mobile-dataswitch" \
      -H "Cookie: SessionID=$SessionID" \
      -H 'Origin: http://192.168.8.1' \
      -H 'Accept-Encoding: gzip, deflate' \
@@ -83,15 +83,15 @@ status=$(curl --max-time 3 "http://192.168.8.1/api/monitoring/status" \
      --silent |\
      grep '<ConnectionStatus>' | cut -b 19-21)
 if [ "$status" -eq 900 ]; then
-    echo 'Status 900 (Connecting)'
+    echo '[*] Connecting'
 elif [ "$status" -eq 901 ]; then
-    echo 'Status 901 (Connected)'
+    echo '[+] Connected'
 elif [ "$status" -eq 902 ]; then
-    echo 'Status 902 (Disconnected)'
+    echo '[-] Disconnected)'
 elif [ "$status" -eq 903 ]; then
-    echo 'Status 903 (Disconnecting)'
+    echo '[*] Disconnecting)'
 else
-    echo 'Unknown status'
+    echo '[-] Unknown status'
 fi
 
 exit 0
