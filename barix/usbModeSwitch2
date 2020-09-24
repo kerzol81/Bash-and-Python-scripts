@@ -67,11 +67,8 @@ curl "http://192.168.8.1/api/dialup/mobile-dataswitch" \
      --output /dev/null
 
 # Check status
-# <ConnectionStatus>900</ConnectionStatus> - Connecting
-# <ConnectionStatus>901</ConnectionStatus> - Connected
-# <ConnectionStatus>902</ConnectionStatus> - Disconnected
-# <ConnectionStatus>903</ConnectionStatus> - Disconnecting
-status=$(curl "http://192.168.8.1/api/monitoring/status" \
+
+status=$(curl --max-time 3 "http://192.168.8.1/api/monitoring/status" \
      -H "Cookie: SessionID=$SessionID" \
      -H 'DNT: 1' \
      -H 'Accept-Encoding: gzip, deflate' \
@@ -89,9 +86,9 @@ if [ "$status" -eq 900 ]; then
     echo 'Status 900 (Connecting)'
 elif [ "$status" -eq 901 ]; then
     echo 'Status 901 (Connected)'
-elif [ "$status" -eq 901 ]; then
+elif [ "$status" -eq 902 ]; then
     echo 'Status 902 (Disconnected)'
-elif [ "$status" -eq 901 ]; then
+elif [ "$status" -eq 903 ]; then
     echo 'Status 903 (Disconnecting)'
 else
     echo 'Unknown status'
