@@ -11,11 +11,11 @@ DefaultProduct=0x$(lsusb | grep -i huawei | awk '{print $6}' | awk -F ":" '{prin
 
 if [ "$DefaultVendor" = "0x" ] || [ "$DefaultProduct" = "0x" ];then
 	echo '[-] Missing USB device'
-	exit 2 
+	exit 1 
 fi
 
 if ! usb_modeswitch --default-vendor "$DefaultVendor" --default-product "$DefaultProduct" --huawei-new-mode;then
-      exit 4
+      exit 2
 fi
 
 
@@ -97,3 +97,5 @@ elif [[ $status -eq 901 ]]; then
 else
     echo 'Unknown status'
 fi
+
+exit 0
