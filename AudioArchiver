@@ -1,0 +1,20 @@
+#!/bin/bash
+
+echo "Audio CD Archiver"
+echo ""
+
+if ! which cdparanoia > /dev/null 2>&1;then
+    echo 'Error: cdparanoia is not installed'
+    exit 1
+fi
+
+read -pr 'Enter Folder Name: ' FOLDER
+
+if [ -n "$FOLDER" ];then
+    mkdir -p "$FOLDER"
+    cd "$FOLDER" || exit 2
+    cdparanoia -B || exit 3
+    eject
+fi
+
+exit 0
