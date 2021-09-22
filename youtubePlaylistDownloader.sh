@@ -12,3 +12,6 @@ mkdir -p "$dir"
 cd "$dir" || exit 1
 
 youtube-dl "$option" "$url"
+
+# wget https://raw.githubusercontent.com/kerzol81/Bash-and-Python-scripts/master/youtubePlaylistDownloader.sh -O /usr/local/bin/youtubePlaylistDownloader
+# chmod 755 /usr/local/bin/youtubePlaylistDownloader
