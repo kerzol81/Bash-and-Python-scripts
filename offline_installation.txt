@@ -1,0 +1,5 @@
+# Set Path variable -- echo %PATH% shoudl contain C:\Python310\scripts
+
+1. download module:
+
+pip download requests -d "C:\Python310\repository"
