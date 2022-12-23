@@ -41,7 +41,8 @@ chars = {
     '..': '.',
     '._.':'-',
     '._':'_',
-    '°':'.'
+    '°':'.',
+    'YouTube':''
 }
 
 for src, dst in chars.items():
@@ -49,5 +50,3 @@ for src, dst in chars.items():
         if filename[0] == ' ' or filename[:1] == ' ':
             dst = ''
         os.rename(filename, filename.replace(src, dst))
-
-
