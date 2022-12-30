@@ -42,7 +42,9 @@ chars = {
     '._.':'-',
     '._':'_',
     '°':'.',
-    'YouTube':''
+    'YouTube':'',
+    '«':'',
+    '»':''
 }
 
 for src, dst in chars.items():
