@@ -63,7 +63,7 @@ if ! mountpoint "$DST" >/dev/null 2>&1
         fi
 fi
 
-# arrange files
+# arrange previously synced files
 for file in $(find "$DST$FOLDER"/tmp -type f); do
         DAY=$(echo $file | awk -F "/" '{print substr($NF,0,4)"-"substr($NF,5,2)"-"substr($NF,7,2)}')
         mkdir -p "$DST$FOLDER/$DAY"
@@ -89,11 +89,13 @@ for file in $(find "$DST$FOLDER"/tmp -type f); do
 done
 
 # clean
-umount "$SRC$FOLDER"
-rmdir "$SRC$FOLDER"
-find "$DST$FOLDER" -empty -type f -delete
-rm -rf "$PID"
+umount "$SRC$FOLDER" || echo "$(date "+%F %H:%M:%S") ERROR: UNMOUNTING SRC FOLDER" >> "$LOG" 2>&1
+rmdir "$SRC$FOLDER" || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING SRC FOLDER" >> "$LOG" 2>&1
+rm -rf "$PID" || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING PID" >> "$LOG" 2>&1
+rm -r "$DST$FOLDER"/.[1-9]* || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING HIDDEN FILES" >> "$LOG" 2>&1
+find "$DST$FOLDER" -empty -type f -delete || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING EMPTY FILES" >> "$LOG" 2>&1
+find "$DST$FOLDER" -empty -type d -delete || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING EMPTY FOLDERS" >> "$LOG" 2>&1
 
-echo "$(date "+%F %H:%M:%S") DONE EXIT (0)" >> "$LOG" 2>&1
+echo "$(date "+%F %H:%M:%S") DONE, EXIT (0)" >> "$LOG" 2>&1
 
 exit 0
