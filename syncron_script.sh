@@ -59,7 +59,7 @@ if ! mountpoint "$DST" >/dev/null 2>&1
     then
         if ! mount -t cifs -o rw,vers=3.0,user=$DATA_SERVER_USER,pass=$DATA_SERVER_PASS //$DATA_SERVER_IP/$DATA_SHARED_DIR "$DST"
             then
-                echo "$(date "+%F %H:%M:%S") DATA SERVER (HA-500) ERROR, EXIT (3)" >> "$LOG" 2>&1 && rm -rf "$PID" || exit 3
+                echo "$(date "+%F %H:%M:%S") DATA SERVER ERROR, EXIT (3)" >> "$LOG" 2>&1 && rm -rf "$PID" || exit 3
         fi
 fi
 
