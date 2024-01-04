@@ -2,9 +2,8 @@
 set -x
 source config
 
-BASENAME=$(basename "$0")
-LOGPATH="/usr/local/bin/log/" && mkdir -p "$LOGPATH"
-PIDPATH="/usr/local/bin/pid/" && mkdir -p "$PIDPATH"
+LOGPATH="/usr/local/bin/log/" && mkdir -p "$LOGPATH" || echo "ERROR: WRITE to $LOGPATH" && exit 0
+PIDPATH="/usr/local/bin/pid/" && mkdir -p "$PIDPATH" || echo "ERROR: WRITE to $LOGPATH" && exit 0
 DST="/mnt/dest/"
 SRC="/mnt/source/"
 RSYNC_OPTS="-v --timeout=30 -az --no-perms --no-owner --no-group --remove-source-files"
@@ -23,7 +22,7 @@ while getopts ${OPTSTRING} opt; do
       FOLDER=${OPTARG}
       ;;
     ?)
-      echo "$(date "+%F %H:%M:%S") Invalid option: -${OPTARG} EXIT (1)"
+      echo "$(date "+%F %H:%M:%S") ERROR: invalid option: -${OPTARG} EXIT (1)"
       exit 1
       ;;
   esac
@@ -46,8 +45,8 @@ else
     touch "$PID"
 fi
 
-
-if [ -z "$3" ]
+# override AXIS default password
+if [ -z "$PASSWORD" ]
     then
         PASS="root"
     else
@@ -89,5 +88,6 @@ rm -r "$DST$FOLDER".[1-9]* || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING HIDDE
 find "$DST$FOLDER" -empty -type f -delete || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING EMPTY FILES" >> "$LOG" 2>&1
 find "$DST$FOLDER" -empty -type d -delete || echo "$(date "+%F %H:%M:%S") ERROR: REMOVING EMPTY FOLDERS" >> "$LOG" 2>&1
 
-echo "$(date "+%F %H:%M:%S") DONE EXIT (0)" >> "$LOG" 2>&1
+echo "$(date "+%F %H:%M:%S") DONE, EXIT (0)" >> "$LOG" 2>&1
+
 exit 0
