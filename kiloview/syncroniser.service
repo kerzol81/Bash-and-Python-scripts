@@ -1,0 +1,16 @@
+[Unit]
+Description=Remote Syncroniser
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+StandardOutput=append:/var/log/sync.log
+StandardError=append:/var/log/sync.log
+
+
+
+User=root
+ExecStart=/usr/bin/syncroniser
+
+[Install]
